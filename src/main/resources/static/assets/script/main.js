@@ -20,9 +20,9 @@ createApp({
 
   methods: {
     loadData() {
-      axios.get("http://localhost:8080/clients")
+      axios.get("http://localhost:8080/api/clients")
         .then(response => {
-          this.clients = response.data._embedded.clients;
+          this.clients = response.data;
           this.restResponse = this.clients;
           console.log(this.clients);
         })
@@ -34,7 +34,7 @@ createApp({
     },
 
     postClient() {
-      axios.post("http://localhost:8080/clients", this.clientData)
+      axios.post("http://localhost:8080/rest/clients/", this.clientData)
         .then(res => {
           this.loadData();
         })

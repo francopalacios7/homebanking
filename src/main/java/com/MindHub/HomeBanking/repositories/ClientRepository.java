@@ -8,5 +8,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 @RepositoryRestResource
 public interface ClientRepository extends JpaRepository<Client, Long> {
-        List<Client> findByLastName(long id);
+        List<Client> findById(long id);
     }

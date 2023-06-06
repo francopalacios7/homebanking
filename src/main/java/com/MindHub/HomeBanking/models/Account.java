@@ -1,4 +1,5 @@
 package com.MindHub.HomeBanking.models;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class Account {
     public void setOwner(Client owner) {
         this.owner = owner;
     }
-
+    @JsonIgnore
     public Client getOwner() {
         return owner;
     }

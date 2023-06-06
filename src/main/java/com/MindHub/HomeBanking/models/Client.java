@@ -1,5 +1,6 @@
 package com.MindHub.HomeBanking.models;
 import com.MindHub.HomeBanking.dtos.AccountDTO;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Client {
     private String email;
     @OneToMany(mappedBy="owner", fetch=FetchType.EAGER)
     Set<Account> accountSet = new HashSet<>();
+
     public Set<Account> getAccounts() {
         return accountSet;
     }

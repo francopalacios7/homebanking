@@ -12,6 +12,8 @@ public class AccountDTO {
     private double balanceAcc;
     private LocalDate creationDate;
 
+    public AccountDTO(){}
+
     public AccountDTO(Account account){
         this.id = account.getId();
         this.numberAcc = account.getNumber();
