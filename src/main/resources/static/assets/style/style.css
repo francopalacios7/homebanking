@@ -4,3 +4,11 @@ padding: 0 !important;
 box-sizing: border-box !important;
 }
 
+main{
+    min-height: 80vh !important;
+}
+
+#account:hover{
+    transform: scale(1.1) !important;
+    transition: 0.5s;
+}
