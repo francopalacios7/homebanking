@@ -47,6 +47,10 @@ public class HomeBankingApplication {
             Transaction transaction1 = new Transaction(TransactionType.DEBIT, -4500.0, "hola", LocalDateTime.now());
             account2.addTransaction(transaction1);
             transactionRepository.save(transaction1);
+
+            Transaction transaction2= new Transaction(TransactionType.DEBIT, -4500.0, "hola", LocalDateTime.now());
+            account2.addTransaction(transaction2);
+            transactionRepository.save(transaction2);
         };
     }
 }

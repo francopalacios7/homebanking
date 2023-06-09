@@ -59,4 +59,8 @@ public class AccountDTO {
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
+
+    public Set<TransactionDTO> getTransactions() {
+        return transactions;
+    }
 }

@@ -39,7 +39,6 @@ public class Client {
         firstName = first;
         lastName = last;
         this.email = email;
-
     }
 
     public String getFirstName() {

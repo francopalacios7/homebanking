@@ -10,6 +10,36 @@
 </head>
 
 <body class="bg-dark">
+    <nav class="navbar navbar-expand-lg bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img class="w-25"
+                    src="./assets/images/Captura_de_pantalla_2023-06-05_175222-removebg-preview.png" alt="logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">News</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-flex">
+                <div>
+                    <button class="btn btn-primary text-black" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Log In</button>
+                </div>
+                <div>
+                    <button class="btn btn-primary text-black" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
     <main class="bg-dark text-light d-flex " id="app">
         <div>
             <section class="m-3">
@@ -33,28 +63,38 @@
             </section>
             <section class="m-3">
                 <h2>Client List</h2>
+
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">First</th>
                             <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Delete Client</th>
                             <th scope="col">Edit Client</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="client of clients">
-                            <th scope="row">{{client._links.client.href}}</th>
-                            <td>{{client.firstName}}</td>
-                            <td>{{client.lastName}}</td>
-                            <td>{{client.email}}</td>
-                            <td><button @click="deleteClient(client._links.client.href)" type="button"
-                                    class="btn btn-danger">Delete Client</button></td>
-                            <td><button @click="editClient(client._links.client.href)" class="btn btn-warning"
-                                    type="button">Edit Client</button></td>
+                        <tr v-for="client in clients">
+                            <th scope="row">{{ client._links.client.href }}</th>
+                            <td>{{ client.firstName }}</td>
+                            <td>{{ client.lastName }}</td>
+                            <td>{{ client.email }}</td>
+                            <td>
+                                <button @click="deleteClient(client._links.client.href)" type="button"
+                                    class="btn btn-danger">
+                                    Delete Client
+                                </button>
+                            </td>
+                            <td>
+                                <button @click="editClient(client._links.client.href)" class="btn btn-warning"
+                                    type="button">
+                                    Edit Client
+                                </button>
+                            </td>
                         </tr>
+
                     </tbody>
                 </table>
             </section>

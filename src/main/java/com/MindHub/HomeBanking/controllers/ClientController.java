@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @RequestMapping ("/api")
 
 public class ClientController {
-
     @Autowired
     private ClientRepository clientRepository;
     @RequestMapping ("/clients")
