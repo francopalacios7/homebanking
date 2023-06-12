@@ -23,7 +23,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="../../manager.html">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">News</a>
@@ -50,12 +50,12 @@
         <div class="d-flex ">
           <ul
             class="list-group list-group-flush d-flex flex-wrap align-items-center border m-3 bg-white border border-success rounded-4"
-            v-for="client of clients.accounts" id="account">
-            <li class="list-group-item bg-primary-subtle">Here is your account number {{client.id}}</li>
-            <li class="list-group-item">Balance: ${{client.balanceAcc}}</li>
-            <li class="list-group-item">Creation Date: {{client.creationDate}}</li>
-            <li class="list-group-item">Account Number: {{client.numberAcc}}</li>
-            <li class="list-group-item rounded-5 bg-primary"><a href="account.html" class="text-black">See details</a></li>
+            v-for="account of accounts" id="account">
+            <li class="list-group-item bg-primary-subtle">Here is your account number {{account.id}}</li>
+            <li class="list-group-item">Balance: ${{account.balanceAcc}}</li>
+            <li class="list-group-item">Creation Date: {{account.creationDate}}</li>
+            <li class="list-group-item">Account Number: {{account.numberAcc}}</li>
+            <li class="list-group-item rounded-5 bg-primary"><a :href="'./account.html?id='+account.id" class="text-black">See Transactions</a></li>
           </ul>
         </div>
       </section>

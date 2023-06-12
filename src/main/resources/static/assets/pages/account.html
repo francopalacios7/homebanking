@@ -56,9 +56,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="account of account.transactions">
+                <tr v-for="account of transactions">
                   <th scope="row">{{account.id}}</th>
-                  <td>{{account.type}}</td>
+                  <td v-if="account.type == 'DEBIT'" class="bg-danger">{{account.type}}</td>
+                  <td v-else class="bg-success">{{account.type}}</td>
                   <td>{{account.amount}}</td>
                   <td>{{account.description}}</td>
                   <td>{{account.dateTime}}</td>

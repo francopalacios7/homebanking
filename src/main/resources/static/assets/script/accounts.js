@@ -1,24 +1,27 @@
 const { createApp } = Vue;
 
 createApp({
-    data(){
-        return{
+    data() {
+        return {
             clients: [],
-        }
+            accounts: []
+        };
     },
-    created(){
-        this.loadData()
+    created() {
+        this.loadData();
     },
     methods: {
         loadData() {
-            axios.get("http://localhost:8080/api/clients/2")
-              .then(response => {
-                this.clients = response.data;
-                console.log(this.clients);
-              })
-              .catch(error => console.log(error));
+            axios
+                .get("http://localhost:8080/api/clients")
+                .then(response => {
+                    this.clients = response.data;
+                    this.accounts = this.clients.flatMap(client => client.accounts);
+                })
+                .catch(error => console.log(error));
+        }
     }
-}
 }).mount('#app');
+
 
 
