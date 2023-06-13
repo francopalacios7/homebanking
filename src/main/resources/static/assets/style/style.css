@@ -13,4 +13,11 @@ main{
     transition: 0.5s;
 }
 
-  
+a{
+    text-decoration: none;
+}
+
+.contain-img{
+    height: 30rem !important;
+}
+
