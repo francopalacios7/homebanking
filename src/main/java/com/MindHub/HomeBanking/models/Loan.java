@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 @Entity
 public class Loan {
@@ -17,24 +18,24 @@ public class Loan {
 
     @ElementCollection
     @Column(name="payment")
-    private Set<Integer> payments;
-
-
+    private List<Integer> payments;
+    @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoanSet = new HashSet<>();
     public Loan(){
     }
 
-    public Loan(String name, Double maxAmount, Set<Integer> payments) {
+    public Loan(String name, Double maxAmount, List<Integer> payments) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
     }
-
+    public Set<ClientLoan> getClientSet(){return clientLoanSet;}
+    public void addLoan(ClientLoan clientLoan) {
+        clientLoan.setLoan(this);
+        clientLoanSet.add(clientLoan);
+    }
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -53,15 +54,16 @@ public class Loan {
         this.maxAmount = maxAmount;
     }
 
-    public Set<Integer> getPayments() {
+    public List<Integer> getPayments() {
         return payments;
     }
 
-    public void setPayments(Set<Integer> payments) {
+    public void setPayments(List<Integer> payments) {
         this.payments = payments;
     }
 
-    public void setOwner(Client client) {
+    public void setOwner(Set<ClientLoan> loansSet) {
+        this.clientLoanSet = loansSet;
     }
 
 }

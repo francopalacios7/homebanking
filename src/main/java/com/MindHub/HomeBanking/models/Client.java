@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -19,24 +20,9 @@ public class Client {
     private String lastName;
     private String email;
     @OneToMany(mappedBy="owner", fetch=FetchType.EAGER)
-    Set<Account> accountSet = new HashSet<>();
-    public Set<Account> getAccounts() {
-        return accountSet;
-    }
-
-    public void addAccount(Account account) {
-        account.setOwner(this);
-        accountSet.add(account);
-    }
-    /*private Set<Loan> loansSet = new HashSet<>();
-    public Set<Loan> getLoans() {
-        return loansSet;
-    }
-
-    public void addLoan(Loan loan) {
-        loan.setOwner(this);
-        loansSet.add(loan);
-    }*/
+    private Set<Account> accountSet = new HashSet<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoanSet = new HashSet<>();
 
     public Client (){
     }
@@ -44,6 +30,21 @@ public class Client {
         firstName = first;
         lastName = last;
         this.email = email;
+    }
+
+    public Set<Account> getAccounts() {
+        return accountSet;
+    }
+    public void addAccount(Account account) {
+        account.setOwner(this);
+        accountSet.add(account);
+    }
+    public Set<ClientLoan> getClientLoanSet() {
+        return clientLoanSet;
+    }
+    public void addLoan(ClientLoan clientLoan) {
+        clientLoan.setClient(this);
+        clientLoanSet.add(clientLoan);
     }
 
     public String getFirstName() {
@@ -78,7 +79,4 @@ public class Client {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 }
