@@ -4,7 +4,8 @@ createApp({
     data() {
         return {
             clients: [],
-            accounts: []
+            accounts: [],
+            loans: []
         };
     },
     created() {
@@ -17,6 +18,7 @@ createApp({
                 .then(response => {
                     this.clients = response.data;
                     this.accounts = this.clients.flatMap(client => client.accounts);
+                    this.loans = this.clients.flatMap(client => client.loans);
                 })
                 .catch(error => console.log(error));
         }
