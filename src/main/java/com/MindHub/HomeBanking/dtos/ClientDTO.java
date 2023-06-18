@@ -13,7 +13,6 @@ public class ClientDTO {
     private String email;
     private Set<AccountDTO> accounts;
     private Set<ClientLoanDTO> loans;
-
     public ClientDTO(Client client) {
         this.id = client.getId();
         this.firstName = client.getFirstName();
@@ -24,27 +23,21 @@ public class ClientDTO {
                 .stream()
                 .map(clientLoan -> new ClientLoanDTO(clientLoan)).collect(Collectors.toSet());
     }
-
     public long getId() {
         return id;
     }
-
     public String getFirstName() {
         return firstName;
     }
-
     public String getLastName() {
         return lastName;
     }
-
     public String getEmail() {
         return email;
     }
-
     public Set<AccountDTO> getAccounts() {
         return accounts;
     }
-
     public Set<ClientLoanDTO> getLoans() {
         return loans;
     }

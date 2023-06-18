@@ -62,7 +62,7 @@
           </ul>
         </div>
       </section>
-      <section class="d-flex flex-column align-items-center ">
+      <section class="d-flex flex-column align-items-center" v-if="loans.lenght != 0">
         <div>
           <h2 class="text-white">This are your requested loans</h2>
         </div>
@@ -80,6 +80,9 @@
           </div>
         </div>
       </div>
+      </section>
+      <section>
+        <h2>You have no loans to pay</h2>
       </section>
     </div>
     <div id="coinmarketcap-widget-marquee" coins="1,1027,825,19556,7919,18878" currency="USD" theme="light"

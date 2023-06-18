@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping ("/api")
-
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
