@@ -19,5 +19,13 @@ a{
 
 .contain-img{
     height: 30rem !important;
+    object-fit: cover!important;
 }
 
+#carouselExampleCaptions{
+    margin: 0 5rem 1rem 5rem!important;
+}
+
+.vstack{
+    margin: 0 5rem 0 5rem!important;
+}
