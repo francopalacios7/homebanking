@@ -19,8 +19,8 @@ public class Card {
     private LocalDate thruDate;
     private LocalDate fromDate;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="owner_id")
-    private Client owner;
+    @JoinColumn(name="client_id")
+    private Client client;
     private  Card (){}
     public Card(String cardHolder, CardType type, CardColor color, String number, Integer cvv, LocalDate thruDate, LocalDate fromDate) {
         this.cardHolder = cardHolder;
@@ -76,10 +76,6 @@ public class Card {
     public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
     }
-    public Client getOwner() {
-        return owner;
-    }
-    public void setOwner(Client owner) {
-        this.owner = owner;
-    }
+    public Client getClient() {return client;}
+    public void setClient(Client client) {this.client = client;}
 }

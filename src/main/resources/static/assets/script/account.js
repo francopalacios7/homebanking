@@ -5,7 +5,8 @@ createApp({
       return {
         account: [],
         param: "",
-        transactions: []
+        transactions: [],
+        amount: []
       }
     },
     created() {
@@ -21,6 +22,12 @@ createApp({
             console.log(this.account);
             this.transactions = this.account.transactions
             this.transactions.sort((a,b) => b.id - a.id )
+            this.amount = this.transactions.amount
+            this.amount = new Intl.NumberFormat('en-US',{
+              style: 'currency',
+              currency: 'USD'
+
+            })
           })
           .catch((error) => console.log(error));
       }

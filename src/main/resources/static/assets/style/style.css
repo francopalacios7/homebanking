@@ -2,10 +2,14 @@ body{
 margin: 0 !important;
 padding: 0 !important;
 box-sizing: border-box !important;
+font-family: 'Roboto', sans-serif;
+background-image: radial-gradient(#000000 0.5px, #c0fff9 0.5px);
+background-size: 10px 10px;
 }
-
+ 
 main{
     min-height: 80vh !important;
+    
 }
 
 #account:hover{
@@ -18,14 +22,49 @@ a{
 }
 
 .contain-img{
-    height: 30rem !important;
+    height: 25rem !important;
     object-fit: cover!important;
 }
 
-#carouselExampleCaptions{
-    margin: 0 5rem 1rem 5rem!important;
+.vstack div:hover{
+    transform: scale(1.0) !important;
+    transition: 0.5s;
+    border: 1px solid black;
+    background-color: rgba(44, 44, 229, 0.797);
+    color: white!important;
 }
 
-.vstack{
-    margin: 0 5rem 0 5rem!important;
+#background{
+    background-color: rgb(78, 181, 255);
+    box-shadow: 0.5rem 0.5rem 1rem 1rem #0000005e;
+    margin: 3rem;
+}
+
+.card{
+    background-color: rgb(78, 181, 255);
+    box-shadow: 0.5rem 0.5rem 0.5rem 0.5rem #0000005e;
+}
+
+.card-img-top{
+    height: 12rem;
+}
+
+.table-background td{
+    background-color:rgb(78, 181, 255);
+}
+
+.list-group{
+    margin-right: 10rem!important;
+}
+
+.list-group-flush li:hover{
+    transform: scale(1.0) !important;
+    transition: 0.5s;
+    border: 1px solid black;
+    background-color: #000000 !important;
+    color: white;
+}
+
+.list-group-flush{
+    padding: 0!important;
 }

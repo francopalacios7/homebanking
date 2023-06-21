@@ -17,8 +17,8 @@ createApp({
                 .get("http://localhost:8080/api/clients")
                 .then(response => {
                     this.clients = response.data;
-                    this.accounts = this.clients.flatMap(client => client.accounts);
-                    this.loans = this.clients.flatMap(client => client.loans);
+                    this.accounts = this.clients.flatMap(client => client.accounts).sort((a,b) => b.id - a.id )
+                    this.loans = this.clients.flatMap(client => client.loans).sort((a,b) => b.id - a.id )
                 })
                 .catch(error => console.log(error));
         }

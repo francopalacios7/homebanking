@@ -1,133 +1,143 @@
-
 * {
     margin: 0 !important;
-    padding: 0!important;
-    box-sizing: border-box!important;
-    font-family: 'Josefin Sans', sans-serif!important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+body{
+    background-image: radial-gradient(#000000 0.5px, #c0fff9 0.5px);
+    background-size: 10px 10px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container {
-    height: 100vh!important;
-    width: 100vw!important;
-    align-items: center!important;
-    display: flex!important;
-    justify-content: center!important;
-    margin-top: 10rem!important;
+    width: 100vw !important;
+    min-height: 60vw!important;
+    align-items: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    font-family: 'Anton', sans-serif;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 .card {
-    width: 400px!important;
-    height: 250px!important;
-    color: #fff!important;
-    cursor: pointer!important;
-    perspective: 1000px!important;
+    width: 400px !important;
+    height: 250px !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    perspective: 1000px !important;
 }
 
 .card-inner {
-    width: 100%!important;
+    width: 100% !important;
     height: 30rem;
-    position: relative!important;
-    transition: transform 1s!important;
-    transform-style: preserve-3d!important;
-}
-#data{
-    margin-top: 2rem!important;
-}
-#data2{
-    margin-top: 2rem!important;
-}
-#data3{
-    margin-top: 2rem!important;
+    position: relative !important;
+    transition: transform 1s !important;
+    transform-style: preserve-3d !important;
 }
 
-.front, .back {
-    width: 100%!important;
-    height: 100%!important;
-    position: absolute!important;
-    top: 0!important;
-    left: 0!important;
-    padding: 20px 30px!important;
-    border-radius: 15px!important;
-    overflow: hidden!important;
-    z-index: 1!important;
-    backface-visibility: hidden!important;
+#data {
+    margin-top: 2rem !important;
+}
+
+#data2 {
+    margin-top: 2rem !important;
+}
+
+#data3 {
+    margin-top: 2rem !important;
+}
+
+.front,
+.back {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    padding: 20px 30px !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+    backface-visibility: hidden !important;
 }
 
 .row {
-    display: flex!important;
-    align-items: center!important;
-    justify-content: space-between!important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
 }
 
 .map-img {
-    width: 100%!important;
-    position: absolute!important;
-    top: 0!important;
-    left: 0!important;
-    opacity: 0.3!important;
-    z-index: -1!important;
+    width: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    opacity: 0.3 !important;
+    z-index: -1 !important;
 }
 
 .card-no {
-    font-size: 35px!important;
-    margin-top: 60px!important;
+    font-size: 35px !important;
+    margin-top: 60px !important;
 }
 
 .card-holder {
-    font-size: 12px!important;
-    margin-top: 40px!important;
+    font-size: 12px !important;
+    margin-top: 40px !important;
 }
 
 .name {
-    font-size: 22px!important;
-    margin-top: 20px!important;
+    font-size: 22px !important;
+    margin-top: 20px !important;
 }
 
 .bar {
-    background: #222!important;
-    margin-left: -30px!important;
-    margin-right: -30px!important;
-    height: 60px!important;
-    margin-top: 10px!important;
+    background: #222 !important;
+    margin-left: -30px !important;
+    margin-right: -30px !important;
+    height: 60px !important;
+    margin-top: 10px !important;
 }
 
 .card-cvv {
-    margin-top: 20px!important;
+    margin-top: 20px !important;
 }
 
 .card-cvv div {
-    flex: 1!important;
+    flex: 1 !important;
 }
 
 .card-cvv img {
-    width: 100%!important;
-    display: block!important;
-    line-height: 0!important;
+    width: 100% !important;
+    display: block !important;
+    line-height: 0 !important;
 }
 
 .card-cvv p {
-    background: #fff!important;
-    color: #000!important;
-    font-size: 22px!important;
-    padding: 10px 20px!important;
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 22px !important;
+    padding: 10px 20px !important;
 }
 
 .card-text {
-    margin-top: 30px!important;
-    font-size: 14px!important;
+    margin-top: 30px !important;
+    font-size: 14px !important;
 }
 
 .signature {
-    margin-top: 30px!important;
+    margin-top: 30px !important;
 }
 
 .back {
-    transform: rotateY(180deg)!important;
+    transform: rotateY(180deg) !important;
 }
 
 .card:hover .card-inner {
-    transform: rotateY(-180deg)!important;
+    transform: rotateY(-180deg) !important;
 }
-#app{
-    min-height: 100vh!important;
+
+#app {
+    min-height: 100vh !important;
 }
