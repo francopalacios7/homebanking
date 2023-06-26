@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @RequestMapping ("/clients")
     public List<ClientDTO> getClients() {
         return clientRepository.findAll().stream().map(ClientDTO::new).collect(Collectors.toList());
@@ -28,8 +30,6 @@ public class ClientController {
                .map(ClientDTO::new)
                .orElse(null);
     }
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
@@ -39,9 +39,8 @@ public class ClientController {
         }
         if (clientRepository.findByEmail(email) !=  null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
-        }
-        clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        }else {clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
+            return new ResponseEntity<>(HttpStatus.CREATED);}
     }
     @RequestMapping("/clients/current")
     public ClientDTO getAuthenticatedClient(Authentication authentication){

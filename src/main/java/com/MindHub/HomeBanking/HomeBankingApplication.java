@@ -29,8 +29,6 @@ public class HomeBankingApplication {
             Client client2 = new Client("Melba", "Morel", "melba@mindhub.com",passwordEncoder.encode("1234"));
             clientRepository.save(client2);
 
-
-
             Account account1 = new Account("VIN001",  5000.0, LocalDate.now());
             client2.addAccount(account1);
             accountRepository.save(account1);

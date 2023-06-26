@@ -21,10 +21,10 @@ public class AccountDTO {
     public Long getId() {
         return id;
     }
-    public String getNumberAcc() {
+    public String getNumber() {
         return number;
     }
-    public Double getBalanceAcc() {
+    public Double getBalance() {
         return balance;
     }
     public LocalDate getCreationDate() {

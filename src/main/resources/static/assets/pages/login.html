@@ -11,19 +11,19 @@
 </head>
 
 <body>
-    <main id="app">
+    <main id="app" style="background-color:#7a5c3c;">
         <div class="d-flex align-items-center">
-            <img class="w-75"
-                src="../images/cloud-computing-modern-flat-concept-for-web-banner-design-man-enters-password-and-login-to-access-cloud-storage-for-uploading-and-processing-files-ill.jpg"
+            <img class="w-100"
+                src="../images/fondo-cocina-mesa-vacia-tablero-madera_27550-1064.avif"
                 alt="log in">
-            <form class="d-flex flex-column gap-5 p-5 rounded-5 me-5" @submit.prevent="logIn"
-                style="background-color: rgb(12, 12, 83);">
+            <form class="d-flex flex-column gap-5 p-5" @submit.prevent="logIn"
+                style="background-color: #7a5c3c; ">
                 <img class="w-100" src="../images/Captura_de_pantalla_2023-06-05_175222-removebg-preview.png"
                     alt="logo">
                 <input v-model="email" type="email" id="email" name="email" placeholder="Email">
                 <input v-model="password" type="password" id="password" name="password" placeholder="Password">
                 <a href="./signup.html" style="font-size: small; color: white;">Not registered yet? Sign up</a>
-                <button type="submit" class="btn text-light" style="background-color: rgb(28, 70, 255);">Sign
+                <button type="submit" class="btn text-light" style="background-color: #513525;">Sign
                     In</button>
             </form>
         </div>

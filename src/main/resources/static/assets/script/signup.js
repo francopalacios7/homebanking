@@ -17,7 +17,7 @@ createApp({
                 .then(response => window.location.href=("/assets/pages/accounts.html"))
                 .catch(error => {
                     console.error(error);
-                });
+                })
         },
     }
 }).mount("#app")

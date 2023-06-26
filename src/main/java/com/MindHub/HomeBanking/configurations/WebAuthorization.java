@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
@@ -19,10 +18,18 @@ public class WebAuthorization{
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/assets/pages/home.html","/assets/style/style.css").permitAll()
+                .antMatchers("/assets/pages/**","/assets/style/**","/assets/script/**","/assets/images/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/assets/pages/accounts.html","/assets/pages/account.html","/assets/script/accounts.js","/assets/script/account.js","/assets/pages/cards.html","/assets/style/cardsStyle.css").hasAuthority("CLIENT")
-                .antMatchers("/manager.html", "/h2-console").hasAuthority("ADMIN");
+                .antMatchers("/manager.html", "/h2-console","/api/clients").hasAuthority("ADMIN")
+                .antMatchers("/assets/pages/accounts.html",
+                                        "/assets/pages/account.html",
+                                        "/assets/script/accounts.js",
+                                        "/assets/script/account.js",
+                                        "/assets/pages/cards.html",
+                                        "/assets/style/cardsStyle.css",
+                                        "/assets/script/cards.js",
+                                        "/api/clients/current").hasAuthority("CLIENT")
+                .anyRequest().denyAll();
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
