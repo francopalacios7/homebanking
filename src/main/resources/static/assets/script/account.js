@@ -30,7 +30,12 @@ createApp({
             })
           })
           .catch((error) => console.log(error));
-      }
+      },
+      logOut() {
+        axios.post('/api/logout')
+        .then(response => window.location.href=("/assets/pages/login.html"))
+        .catch(error => console.log(error))
+    }
     }
   }).mount('#app');
   

@@ -11,6 +11,7 @@
 </head>
 
 <body>
+  <div id="app">
   <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img class="w-50"
@@ -38,14 +39,25 @@
           </li>
         </ul>
       </div>
-      <div class="d-flex">
+      <div class="nav-item dropdown" v-if="logged == true">
+        <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white"
+            class="bi bi-file-person" viewBox="0 0 16 16">
+            <path
+              d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
+            <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+          </svg></a>
+        <ul class="dropdown-menu dropdown-menu-lg-end">
+          <li><button class="dropdown-item" type="button">Settings</button></li>
+          <li><button class="dropdown-item" type="button" @click="logOut">Log Out</button></li>
+        </ul>
+      </div>
+      <div class="d-flex" v-else>
         <div>
-          <button class="btn text-black m-2" style="background-color: rgb(67, 209, 228);" type="button"
-            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Log In</button>
+          <button class="btn text-black m-2" style="background-color: rgb(67, 209, 228);" type="button"><a href="../pages/login.html" class="text-dark">Log In</a></button>
         </div>
         <div>
-          <button class="btn text-black m-2" style="background-color: rgb(67, 209, 228);" type="button"
-            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sign Up</button>
+          <button class="btn text-black m-2" style="background-color: rgb(67, 209, 228);" type="button"><a href="" class="text-dark">Sign Up</a></button>
         </div>
       </div>
     </div>
@@ -224,22 +236,6 @@
         </div>
       </div>
     </article>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-      <div class="offcanvas-header bg-dark text-light">
-        <h5 class="offcanvas-title" id="offcanvasRightLabel">Log In</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body bg-dark opacity-75 text-light">
-        <form action="" class="d-flex flex-column">
-          <label for="fullName">Full Name:</label>
-          <input id="fullName" type="text">
-          <label for="email">Email:</label>
-          <input id="email" type="email">
-          <label for="password">Password:</label>
-          <input id="password" type="password">
-        </form>
-      </div>
-    </div>
   </main>
   <footer class="d-flex align-items-center bg-dark p-3">
     <a href="https://www.linkedin.com/in/franco-palacios-0a45ab26a/" target="_blank" class="text-light"><svg
@@ -275,6 +271,8 @@
     crossorigin="anonymous"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="../script/home.js"></script>
+</div>
 </body>
 
 </html>
