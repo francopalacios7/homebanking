@@ -26,6 +26,13 @@ createApp({
             axios.post('/api/logout')
             .then(response => window.location.href=("/assets/pages/login.html"))
             .catch(error => console.log(error))
+        },
+        createAccount(){
+            axios.post("http://localhost:8080/api/clients/current/accounts")
+            .then(response => {
+                this.loadData()
+            })
+            .catch(error => console.log(error))
         }
     }
 }).mount('#app');

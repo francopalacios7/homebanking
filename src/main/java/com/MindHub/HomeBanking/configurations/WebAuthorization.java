@@ -21,6 +21,8 @@ public class WebAuthorization{
                 .antMatchers("/assets/pages/**","/assets/style/**","/assets/script/**","/assets/images/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 .antMatchers("/manager.html", "/h2-console","/api/clients").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT")
                 .antMatchers("/assets/pages/accounts.html",
                                         "/assets/pages/account.html",
                                         "/assets/script/accounts.js",
@@ -29,7 +31,8 @@ public class WebAuthorization{
                                         "/assets/style/cardsStyle.css",
                                         "/assets/script/cards.js",
                                         "/api/clients/current").hasAuthority("CLIENT")
-                .anyRequest().denyAll();
+                        .anyRequest().denyAll();
+
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
