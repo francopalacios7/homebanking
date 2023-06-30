@@ -23,9 +23,10 @@ public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private String randomNum;
     @RequestMapping ("/clients")
     public List<ClientDTO> getClients() {
         return clientRepository.findAll().stream().map(ClientDTO::new).collect(Collectors.toList());
@@ -48,10 +49,9 @@ public class ClientController {
         }
         else{
             Client client = clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
-            String randomNum;
-            do {
+            do{
                 Random random = new Random();
-                randomNum = "VIN-" + random.nextInt(90000000);
+                randomNum = "VIN-" + random.nextInt(99999999);
             }while (accountRepository.findByNumber(randomNum) != null);
             Account account = new Account(randomNum, 0.0, LocalDate.now());
             client.addAccount(account);

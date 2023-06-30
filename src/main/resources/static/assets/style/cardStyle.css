@@ -2,26 +2,17 @@
     margin: 0 !important;
     padding: 0 !important;
     box-sizing: border-box !important;
-}
-
-body{
-    background-image: radial-gradient(#000000 0.5px, #c0fff9 0.5px);
-    background-size: 10px 10px;
     font-family: 'Roboto', sans-serif;
 }
 
 .container {
     width: 100vw !important;
-    min-height: 60vw!important;
-    align-items: center !important;
-    display: flex !important;
-    justify-content: center !important;
     font-family: 'Anton', sans-serif;
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
 .card {
-    width: 400px !important;
+    width: 300px !important;
     height: 250px !important;
     color: #fff !important;
     cursor: pointer !important;

@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="../style/style.css">
   <title>Yours Accounts</title>
 </head>
@@ -60,12 +61,12 @@
         <section class="d-flex flex-column align-items-center">
           <div>
             <img src="../images/interna-homebanking.jpg" class="w-100 ps-md-5 pe-md-5" alt="interna-homebanking">
+            <h6 class="m-5">Home / Accounts</h6>
             <h1 class="card-title text-dark ps-md-5">Welcome {{clients.firstName}}!</h1>
             <h5 class="ps-md-5">Accounts State</h5>
           </div>
           <div class="d-md-flex flex-md-wrap justify-content-md-center">
-            <div class="bg-light flex-wrap flex-column m-3 p-3 "
-              v-for="account of accounts" id="account">
+            <div class="bg-light flex-wrap flex-column m-3 p-3 shadow" v-for="account of accounts" id="account" >
               <h5>Account N°: {{account.number}}</h5>
               <p class="d-flex">Balance:</p>
               <h4>${{account.balance.toLocaleString(2)}}</h4>
@@ -73,18 +74,18 @@
                 <p class="">Creation Date: {{account.creationDate}}</p>
                 <p>Premium</p>
               </div>
-              <p class="btn rounded-1 w-75" style="background-color:  #ffb300;;"><a :href="'./account.html?id='+account.id"
-                  class="text-light">Transactions</a></p>
+              <p class="btn rounded-1 w-75" style="background-color:  #ffb300;;"><a
+                  :href="'./account.html?id='+account.id" class="text-light">Transactions</a></p>
             </div>
           </div>
           <nav class="w-100 d-flex flex-column ps-md-5 pe-md-5" id="nav2">
             <h5 class="mt-4">Quick operations</h5>
-            <ul class="list-group-flush d-flex flex-row" style="background-color: #ffffff;" >
+            <ul class="list-group-flush d-flex flex-row shadow" style="background-color: #ffffff;">
               <li class="list-group-item text-dark">Pay bills</li>
               <li class="list-group-item text-dark">Request a loan</li>
               <li class="list-group-item text-dark">Invest</li>
               <li class="list-group-item text-dark">
-                <button @click="createAccount" v-if="accounts.length < 3">Create account</button>
+                <button @click="createAccount" v-if="accounts.length < 3" class="bg-white border-0">Create account</button>
               </li>
               <li class="list-group-item text-dark" v-else>Settings</li>
             </ul>
@@ -95,13 +96,15 @@
             <h2 class="text-dark ps-4">This are your requested loans</h2>
           </div>
           <div class="d-flex">
-          <div class="flex-wrap flex-column border m-3 p-3 border rounded-3" style="background-color: #000000; color: #ffffff;"
-              v-for="loan of loans">
+            <div class="flex-wrap flex-column border m-3 p-3 border rounded-3"
+              style="background-color: #000000; color: #ffffff;" v-for="loan of loans">
               <div class="d-flex justify-content-between gap-5">
-              <h5 class="border-bottom">{{loan.name}} loan</h5>
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16" style="color: #ffb300;">
-                <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89L8 0ZM3.777 3h8.447L8 1 3.777 3ZM2 6v7h1V6H2Zm2 0v7h2.5V6H4Zm3.5 0v7h1V6h-1Zm2 0v7H12V6H9.5ZM13 6v7h1V6h-1Zm2-1V4H1v1h14Zm-.39 9H1.39l-.25 1h13.72l-.25-1Z"/>
-              </svg>
+                <h5 class="border-bottom">{{loan.name}} loan</h5>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bank"
+                  viewBox="0 0 16 16" style="color: #ffb300;">
+                  <path
+                    d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89L8 0ZM3.777 3h8.447L8 1 3.777 3ZM2 6v7h1V6H2Zm2 0v7h2.5V6H4Zm3.5 0v7h1V6h-1Zm2 0v7H12V6H9.5ZM13 6v7h1V6h-1Zm2-1V4H1v1h14Zm-.39 9H1.39l-.25 1h13.72l-.25-1Z" />
+                </svg>
               </div>
               <p class="d-flex">${{loan.amount.toLocaleString(2)}}</p>
               <p class="d-flex">{{loan.payments}} payments</p>
@@ -148,6 +151,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="../script/accounts.js"></script>

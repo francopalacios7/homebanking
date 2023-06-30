@@ -21,6 +21,9 @@ main{
     height: 70vh;
 }
 
+.center{
+    text-align: center;
+}
 
 a{
     text-decoration: none;

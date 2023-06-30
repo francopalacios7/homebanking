@@ -18,10 +18,16 @@ createApp({
                     axios.post('/api/login',`email=${this.email}&password=${this.password}`)
                     .then(res => window.location.href="/assets/pages/accounts.html")
                     .catch(err => console.log(err))
+                }).catch(error => {
+                    this.logError()
                 })
-                .catch(error => {
-                    console.error(error);
-                })
+        },
+        logError() {
+            document.getElementById('errorModal').style.display = 'block';
+            this.email = ""
+        },
+        closeModal() {
+            document.getElementById('errorModal').style.display = 'none';
         }
     }
 }).mount("#app")
