@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class AccountDTO {
     private Long id;
     private String number;
-    private Double balance;
+    private double balance;
     private LocalDate creationDate;
     private Set<TransactionDTO> transactions;
     public AccountDTO(Account account){

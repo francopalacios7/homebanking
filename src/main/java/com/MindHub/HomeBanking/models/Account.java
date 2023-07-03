@@ -1,5 +1,4 @@
 package com.MindHub.HomeBanking.models;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ public class Account {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private String number;
-    private Double balance;
+    private double balance;
     private LocalDate creationDate;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
@@ -22,7 +21,7 @@ public class Account {
     @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
     Set<Transaction> transactionSet = new HashSet<>();
     public Account() { }
-    public Account(String number, Double balance, LocalDate date){
+    public Account(String number, double balance, LocalDate date){
         this.number = number;
         this.balance = balance;
         creationDate = date;
@@ -37,18 +36,12 @@ public class Account {
     public Long getId() {
         return id;
     }
-    public String getNumber() {
-        return number;
-    }
+    public String getNumber() {return number;}
     public void setNumber(String number) {
         this.number = number;
     }
-    public Double getBalance() {
-        return balance;
-    }
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
+    public double getBalance() {return balance;}
+    public void setBalance(double balance) {this.balance = balance;}
     public LocalDate getCreationDate() {
         return creationDate;
     }

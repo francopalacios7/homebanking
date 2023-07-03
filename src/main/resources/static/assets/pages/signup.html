@@ -16,7 +16,7 @@
             <img class="w-100"
                 src="../images/fondo-cocina-mesa-vacia-tablero-madera_27550-1064.avif"
                 alt="log in">
-            <form class="d-flex flex-column gap-5 p-5 rounded-5 me-5" @submit.prevent="signUp"
+            <form class="d-flex flex-column gap-4 p-5 rounded-5 me-5" @submit.prevent="signUp"
                 style="background-color: #ffb300;">
                 <img class="w-50" src="../images/Captura_de_pantalla_2023-06-29_114047-removebg-preview.png"
                     alt="logo">
@@ -24,6 +24,7 @@
                     <input v-model="lastName" type="text" id="lastName" name="lastName" placeholder="Last name">
                 <input v-model="email" type="email" id="email" name="email" placeholder="Email">
                 <input v-model="password" type="password" id="password" name="password" placeholder="Password">
+                <a href="../pages/login.html" class="text-light">Already have an account? Log in</a>
                 <button type="submit" class="btn text-light" style="background-color: rgb(0, 0, 0);">Sign
                     Up</button>
             </form>

@@ -1,6 +1,6 @@
 package com.MindHub.HomeBanking.models;
-import org.hibernate.annotations.GenericGenerator;
 
+import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +28,6 @@ public class Client {
         lastName = last;
         this.email = email;
         this.password = password;
-
     }
     public Set<Account> getAccounts() {
         return accountSet;

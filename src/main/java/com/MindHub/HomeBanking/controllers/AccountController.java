@@ -1,7 +1,6 @@
 package com.MindHub.HomeBanking.controllers;
+
 import com.MindHub.HomeBanking.dtos.AccountDTO;
-import com.MindHub.HomeBanking.dtos.ClientDTO;
-import com.MindHub.HomeBanking.dtos.TransactionDTO;
 import com.MindHub.HomeBanking.models.Account;
 import com.MindHub.HomeBanking.models.Client;
 import com.MindHub.HomeBanking.repositories.AccountRepository;
