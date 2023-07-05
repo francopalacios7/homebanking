@@ -28,7 +28,8 @@ public class WebAuthorization{
                                         "/assets/pages/account.html",
                                         "/assets/pages/cards.html",
                                         "/assets/pages/create-cards.html",
-                                        "/api/clients/current").hasAuthority("CLIENT")
+                                        "/api/clients/current",
+                        "/assets/pages/transfers.html").hasAuthority("CLIENT")
                         .anyRequest().denyAll();
         http.formLogin()
                 .usernameParameter("email")

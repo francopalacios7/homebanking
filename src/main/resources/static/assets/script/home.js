@@ -3,17 +3,17 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
-            logged: true
+            loggedUser: true
         };
     },
     created() {
-        
+        this.logged()
     },
     methods: {
             logged(){
                 axios.get("http://localhost:8080/api/clients/current")
-                .then(response => this.logged)
-                .catch(error => this.logged = false)
+                .then(response => this.loggedUser)
+                .catch(error => this.loggedUser = false)
             },
             logOut() {
                 axios.post('/api/logout')
