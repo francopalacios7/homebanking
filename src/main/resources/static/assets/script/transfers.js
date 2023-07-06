@@ -3,15 +3,14 @@ const { createApp } = Vue;
 createApp({
   data() {
     return {
-      transfer: {
-        numberOrigin: "",
-        numberForeign: "",
-        amount: 0.0,
-        description: ""
-      },
+      numberOrigin: "",
+      numberForeign: "",
+      amount: 0.0,
+      description: "",
       client: [],
       accounts: [],
       endModal: true,
+      radio: ""
     }
   },
   created() {
@@ -20,11 +19,10 @@ createApp({
   methods: {
     loadData() {
       axios
-        .get("http://localhost:8080/api/clients/current")
+        .get("/api/clients/current")
         .then(response => {
           this.client = response.data;
           this.accounts = this.client.accounts;
-
         })
         .catch(error => console.log(error));
     },
@@ -35,34 +33,38 @@ createApp({
         .catch(error => console.log(error));
     },
     performTransfer() {
-      if (this.transfer.numberOrigin === "" || this.transfer.numberForeign === "" || this.transfer.amount === 0 || this.transfer.description === "") {
+      if (this.numberOrigin == "" || this.numberForeign == "" || this.amount == 0.0 || this.description == "") {
         this.missingData();
         this.closeModal();
       }
-
-      /* else if (this.transfer.amount > this.accounts.amount) {
+      else if (this.amount > this.numberOrigin.balance) {
         this.notAmount()
         this.closeModal()
-      } */
-
-       /* else if (this.accounts.number != this.transfer.numberOrigin) {
+      }
+      else if (!this.accounts.find(account => account.number == this.numberOrigin)) {
         this.notNumber()
         this.closeModal()
-      }  */
-      
-      /* hay que arreglar estos dos */
-      
+      }
+      else if (!this.accounts.find(account => account.number == this.numberForeign)) {
+        this.notNumber()
+        this.closeModal()
+      }
       else {
         axios
-          .post('/api/transactions', this.transfer)
+          .post('/api/transactions', {
+            "numberOrigin": this.numberOrigin,
+            "numberForeign": this.numberForeign,
+            "amount": this.amount,
+            "description": this.description
+          })
           .then(res => {
             this.loadData();
             this.endModal = document.getElementById('confirm').style.display = 'none';
-            this.transfer.numberOrigin = "";
-            this.transfer.numberForeign = "";
-            this.transfer.amount = 0;
-            this.transfer.description = "";
             this.confirmed();
+            this.numberOrigin = "";
+            this.numberForeign = "";
+            this.amount = 0.0;
+            this.description = "";
           })
           .catch(err => console.log(err));
       }
@@ -70,15 +72,15 @@ createApp({
     missingData() {
       document.getElementById('missingData').style.display = 'block';
     },
-     /* notNumber() {
-      document.getElementById('notNumber').style.display = 'block';
-    }, */ 
     confirmTransfer() {
       document.getElementById('confirm').style.display = 'block';
     },
-    /* notAmount() {
+    notNumber() {
+      document.getElementById('notNumber').style.display = 'block';
+    },
+    notAmount() {
       document.getElementById('notAmount').style.display = 'block';
-    }, */
+    },
     closeModal() {
       document.getElementById('confirm').style.display = 'none';
     },
@@ -93,10 +95,17 @@ createApp({
     },
     closeModal4() {
       document.getElementById('notNumber').style.display = 'none';
-    }/* ,
+    },
     closeModal5() {
       document.getElementById('notAmount').style.display = 'none';
-    }  */
+    }
   }
 
 }).mount("#app");
+
+
+
+/* hay que arreglar el de numbers */
+
+ 
+       

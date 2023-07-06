@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="../style/style.css">
-    <title>Transfers</title>
+    <title>Document</title>
 </head>
 
 <body>
@@ -35,7 +35,7 @@
                             <a class="nav-link text-light" href="#">Trading</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-decoration-underline text-light" href="./accounts.html">Accounts</a>
+                            <a class="nav-link text-light" href="./accounts.html">Accounts</a>
                         </li>
                     </ul>
                 </div>
@@ -54,55 +54,47 @@
                 </div>
             </div>
         </nav>
-        <main class="d-flex justify-content-center align-items-center shadow">
-            <form @submit.prevent="confirmTransfer"
-                class="d-flex flex-column align-items-center gap-3 w-50 rounded-3 p-5 m-3"
-                style="background-color: white;">
-                <div class="d-flex flex-row">
-                    <label for="origin" class="m-3">
-                        Origin
-                        <input type="radio" name="destination" id="origin" value="origin" v-model="radio">
-                    </label>
-                    <label for="foreign" class="m-3">
-                        Foreign
-                        <input type="radio" name="destination" id="foreign" value="foreign" v-model="radio">
-                    </label>
-                </div>
-                <div class="d-flex flex-column gap-3">
-                    <label for="origin" class="d-flex flex-column">
-                        Origin account:
-                        <select type="text" name="accounts" id="accounts" v-model="numberOrigin">
-                            <template v-for="account of accounts">
-                                <option :value="account.number">{{account.number}}</option>
-                            </template>
-                        </select>
-                    </label>
-                    <label for="origin" class="d-flex flex-column">
-                        Destination account:
-                        <select name="accounts" id="accounts" v-model="numberForeign" v-if="radio == 'origin'">
-                            <template v-for="account of accounts">
-                                <option :value="account.number">{{account.number}}</option>
-                            </template>
-                        </select>
-                        <input type="text" v-if="radio == 'foreign'" v-model="numberForeign">
-                    </label>
-                    <label for="amount" class="d-flex flex-column">
-                        Amount:
-                        <input type="text" name="amount" id="amount" v-model="amount">
-                    </label>
-                    <label for="description" class="d-flex flex-column">
-                        Description:
-                        <input type="text" name="description" id="description" v-model="description">
-                    </label>
-                    <button class="border-0" style="background-color: #ffb300;">Transfer</button>
-                </div>
+        <main>
+            <form @submit.prevent="confirm">
+                <label for="loans">
+                    Select a loan:
+                    <select name="loans" id="loans" v-model="selectedLoan">
+                        <template v-for="loan of loans">
+                            <option :value="loan">{{loan.name}}</option>
+                        </template>
+                    </select>
+                </label>
+                <label for="accounts">
+                    Select an account:
+                    <select name="accounts" id="accounts" v-model="accountNumber">
+                        <template v-for="account of accounts">
+                            <option :value="account">{{account.number}}</option>
+                        </template>
+                    </select>
+                </label>
+                <label for="amount">Amount:
+                    <input type="text" name="amount" id="loan" v-model="amount"
+                        :placeholder="'max. $' + selectedLoan.maxAmount">
+                </label>
+                <label for="payments">Payments:
+                    <select name="payments" id="payments" v-model="payment">
+                        <template v-for="payment of selectedLoan.payments">
+                            <option :value="payment">{{payment}}</option>
+                        </template>
+                    </select>
+                </label>
+                <button>Apply</button>
             </form>
             <div id="confirm" class="modal">
                 <div class="modal-content">
                     <span class="close d-flex justify-content-end" @click="closeModal">&times;</span>
-                    <h6 class="m-3 d-flex justify-content-center">Are you sure you want to make this transfer?</h6>
+                    <h6 class="m-3 d-flex justify-content-center">Are you sure you want to request this loan?</h6>
+                    <h6>{{selectedLoan.name}}</h6>
+                    <p>Account: {{accounts.number}}</p>
+                    <p>Amount: {{amount}}</p>
+                    <p>Payments: {{payment}}</p>
                     <div class="d-flex justify-content-center align-items-center">
-                        <button @click="performTransfer" class="w-25 m-3 border-0 bg-success">Acept</button>
+                        <button @click="performLoan" class="w-25 m-3 border-0 bg-success">Acept</button>
                         <button @click="closeModal" class="w-25 m-3 border-0">Cancel</button>
                     </div>
                 </div>
@@ -111,28 +103,16 @@
                 <div class="modal-content">
                     <span class="close d-flex justify-content-end" @click="closeModal2">&times;</span>
                     <div class="d-flex justify-content-center align-items-center flex-column">
-                        <p>Transfer completed with success.</p>
+                        <p>Loan conceded with success.</p>
                         <button class="border-0 w-25" style="background-color: #ffb300;"><a href="./accounts.html"
                                 class="text-dark">Go back to accounts</a></button>
                     </div>
                 </div>
             </div>
-            <div id="missingData" class="modal">
-                <div class="modal-content">
-                    <span class="close d-flex justify-content-end" @click="closeModal3">&times;</span>
-                    <p>All the fields must be filled</p>
-                </div>
-            </div>
-            <div id="notNumber" class="modal">
-                <div class="modal-content">
-                    <span class="close d-flex justify-content-end" @click="closeModal4">&times;</span>
-                    <p>Please verify that the account numbers are correct.</p>
-                </div>
-            </div>
             <div id="notAmount" class="modal">
                 <div class="modal-content">
                     <span class="close d-flex justify-content-end" @click="closeModal5">&times;</span>
-                    <p>Insuficient funds.</p>
+                    <p>Limit amount exceeded for this loan.</p>
                 </div>
             </div>
         </main>
@@ -163,16 +143,19 @@
                     <path
                         d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034v.21Zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791Z" />
                 </svg></a>
-                <a href="https://github.com/francopalacios7" target="_blank" class="text-dark"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-github m-2" viewBox="0 0 16 16">
-                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-                  </svg></a>
+            <a href="https://github.com/francopalacios7" target="_blank" class="text-dark"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                    class="bi bi-github m-2" viewBox="0 0 16 16">
+                    <path
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                </svg></a>
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
             crossorigin="anonymous"></script>
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="../script/transfers.js"></script>
+        <script src="../script/loan-application.js"></script>
     </div>
 </body>
 

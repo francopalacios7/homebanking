@@ -39,7 +39,7 @@ public class Client {
     public Set<ClientLoan> getClientLoanSet() {
         return clientLoanSet;
     }
-    public void addLoan(ClientLoan clientLoan) {
+    public void addClientLoan(ClientLoan clientLoan) {
         clientLoan.setClient(this);
         clientLoanSet.add(clientLoan);
     }

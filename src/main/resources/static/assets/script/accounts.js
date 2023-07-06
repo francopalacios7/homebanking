@@ -19,6 +19,7 @@ createApp({
                     this.clients = response.data;
                     this.accounts = this.clients.accounts.sort((a,b) => b.id - a.id )
                     this.loans = this.clients.loans.sort((a,b) => b.id - a.id )
+                    console.log(this.loans);
                 })
                 .catch(error => console.log(error));
         },
