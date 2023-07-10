@@ -15,7 +15,7 @@ public class AccountImplement implements AccountService {
     private AccountRepository accountRepository;
     private String randomNum;
     @Override
-    public Account findByNumber(String number) {return accountRepository.findByNumber(randomNum);}
+    public Account findByNumber(String number) {return accountRepository.findByNumber(number);}
     @Override
     public List<AccountDTO> getAccountsDTO() {return accountRepository.findAll().stream().map(AccountDTO::new).collect(Collectors.toList());}
     @Override

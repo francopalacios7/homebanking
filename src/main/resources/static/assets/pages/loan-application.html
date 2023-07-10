@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="../style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <title>Document</title>
+        <link rel="stylesheet" href="../style/style.css">
+    <title>Loan application</title>
 </head>
 
 <body>
@@ -54,9 +55,9 @@
                 </div>
             </div>
         </nav>
-        <main>
-            <form @submit.prevent="confirm">
-                <label for="loans">
+        <main class="d-flex justify-content-center align-items-center shadow">
+            <form @submit.prevent="confirmLoan" class="d-flex flex-column justify-content-center gap-3 w-50 rounded-3 p-5 m-3 bg-white">
+                <label for="loans" class="d-flex flex-column">
                     Select a loan:
                     <select name="loans" id="loans" v-model="selectedLoan">
                         <template v-for="loan of loans">
@@ -64,33 +65,33 @@
                         </template>
                     </select>
                 </label>
-                <label for="accounts">
+                <label for="accounts" class="d-flex flex-column">
                     Select an account:
                     <select name="accounts" id="accounts" v-model="accountNumber">
                         <template v-for="account of accounts">
-                            <option :value="account">{{account.number}}</option>
+                            <option :value="account.number">{{account.number}}</option>
                         </template>
                     </select>
                 </label>
-                <label for="amount">Amount:
+                <label for="amount" class="d-flex flex-column">Amount:
                     <input type="text" name="amount" id="loan" v-model="amount"
                         :placeholder="'max. $' + selectedLoan.maxAmount">
                 </label>
-                <label for="payments">Payments:
+                <label for="payments" class="d-flex flex-column">Payments:
                     <select name="payments" id="payments" v-model="payment">
                         <template v-for="payment of selectedLoan.payments">
                             <option :value="payment">{{payment}}</option>
                         </template>
                     </select>
                 </label>
-                <button>Apply</button>
+                <button class="border-0" style="background-color: #ffb300;">Apply</button>
             </form>
             <div id="confirm" class="modal">
                 <div class="modal-content">
                     <span class="close d-flex justify-content-end" @click="closeModal">&times;</span>
                     <h6 class="m-3 d-flex justify-content-center">Are you sure you want to request this loan?</h6>
                     <h6>{{selectedLoan.name}}</h6>
-                    <p>Account: {{accounts.number}}</p>
+                    <p>Account: {{accountNumber}}</p>
                     <p>Amount: {{amount}}</p>
                     <p>Payments: {{payment}}</p>
                     <div class="d-flex justify-content-center align-items-center">
@@ -112,7 +113,7 @@
             <div id="notAmount" class="modal">
                 <div class="modal-content">
                     <span class="close d-flex justify-content-end" @click="closeModal5">&times;</span>
-                    <p>Limit amount exceeded for this loan.</p>
+                    <p>Limit amount exceeded or forbidden for this loan.</p>
                 </div>
             </div>
         </main>

@@ -54,7 +54,7 @@ public class TransactionController {
         if (!accounts.stream().anyMatch(account -> account.getNumber().equals(tranferDTO.getNumberOrigin()))){
             return new ResponseEntity<>("The account doesn't belong to this client", HttpStatus.FORBIDDEN);
         }
-        if (accountOrigin.getBalance() < tranferDTO.getAmount()){
+        if (tranferDTO.getAmount() > accountOrigin.getBalance()){
             return new ResponseEntity<>("Insufficient funds", HttpStatus.FORBIDDEN);
         }
         Transaction transactionOrigin = new Transaction(TransactionType.DEBIT, -tranferDTO.getAmount(), tranferDTO.getDescription() + " " + tranferDTO.getNumberOrigin(), LocalDateTime.now());

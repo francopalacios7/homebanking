@@ -24,16 +24,16 @@ createApp({
         },
         logOut() {
             axios.post('/api/logout')
-            .then(response => window.location.href=("/assets/pages/login.html"))
-            .catch(error => console.log(error))
+                .then(response => window.location.href = ("/assets/pages/login.html"))
+                .catch(error => console.log(error))
         },
-        createCard(){
-            axios.post('/api/clients/current/cards',`type=${this.cardType}&color=${this.cardColor}`)
-            .then(res => {
-                this.loadData();
-                window.location.href=("/assets/pages/cards.html")
-            })
-            .catch(err => console.log(err))
+        createCard() {
+            axios.post('/api/clients/current/cards', `type=${this.cardType}&color=${this.cardColor}`)
+                .then(res => {
+                    this.loadData();
+                    window.location.href = ("/assets/pages/cards.html")
+                })
+                .catch(err => console.log(err))
         }
     }
 }).mount('#app');

@@ -4,7 +4,9 @@ createApp({
     data() {
         return {
             client: [],
-            cards: []
+            cards: [],
+            debitCards: [],
+            creditCards: []
         }
     },
     created() {
@@ -17,6 +19,9 @@ createApp({
                 .then(response => {
                     this.client = response.data;
                     this.cards = this.client.cards.sort((a, b) => b.id - a.id)
+                    this.debitCards = this.cards.filter(card => card.type == "DEBIT")
+                    this.creditCards = this.cards.filter(card => card.type == "CREDIT")
+                    console.log(this.debitCards, this.creditCards);
                 })
                 .catch(error => console.log(error));
         },

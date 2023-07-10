@@ -23,7 +23,7 @@ public class CardImplement implements CardService {
     private CardRepository cardRepository;
     private String randomNum;
     @Override
-    public Card findByNumber(String number) {return cardRepository.findByNumber(randomNum);}
+    public Card findByNumber(String number) {return cardRepository.findByNumber(number);}
     @Override
     public void save(Card card) {cardRepository.save(card);}
 }

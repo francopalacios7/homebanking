@@ -56,8 +56,7 @@
         </nav>
         <main class="d-flex justify-content-center align-items-center shadow">
             <form @submit.prevent="confirmTransfer"
-                class="d-flex flex-column align-items-center gap-3 w-50 rounded-3 p-5 m-3"
-                style="background-color: white;">
+                class="d-flex flex-column align-items-center gap-3 w-50 rounded-3 p-5 m-3 bg-white">
                 <div class="d-flex flex-row">
                     <label for="origin" class="m-3">
                         Origin
@@ -77,14 +76,17 @@
                             </template>
                         </select>
                     </label>
-                    <label for="origin" class="d-flex flex-column">
+                    <label for="origin" class="d-flex flex-column" v-if="radio == 'origin'">
                         Destination account:
-                        <select name="accounts" id="accounts" v-model="numberForeign" v-if="radio == 'origin'">
+                        <select name="accounts" id="accounts" v-model="numberForeign">
                             <template v-for="account of accounts">
                                 <option :value="account.number">{{account.number}}</option>
                             </template>
                         </select>
-                        <input type="text" v-if="radio == 'foreign'" v-model="numberForeign">
+                    </label>
+                    <label for="foreign" v-if="radio == 'foreign'">
+                        Destination account:
+                        <input type="text" name="foreign"  v-model="numberForeign">
                     </label>
                     <label for="amount" class="d-flex flex-column">
                         Amount:
@@ -132,7 +134,7 @@
             <div id="notAmount" class="modal">
                 <div class="modal-content">
                     <span class="close d-flex justify-content-end" @click="closeModal5">&times;</span>
-                    <p>Insuficient funds.</p>
+                    <p>Insuficient or forbidden funds.</p>
                 </div>
             </div>
         </main>

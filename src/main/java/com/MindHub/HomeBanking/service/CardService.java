@@ -1,6 +1,5 @@
 package com.MindHub.HomeBanking.service;
 
-
 import com.MindHub.HomeBanking.models.Card;
 
 public interface CardService {

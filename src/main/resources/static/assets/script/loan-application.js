@@ -48,6 +48,10 @@ createApp({
                 this.notAmount()
                 this.closeModal()
             }
+            else if(this.amount <= 0){
+                this.notAmount()
+                this.closeModal()
+            }
             else {
                 axios
                     .post('/api/loans', {
@@ -76,6 +80,9 @@ createApp({
         },
         notAmount() {
             document.getElementById('notAmount').style.display = 'block';
+        },
+        notNegativeAmount(){
+            document.getElementById('notNegativeAmount').style.display = 'block';
         },
         closeModal() {
             document.getElementById('confirm').style.display = 'none';

@@ -17,6 +17,8 @@
     color: #fff !important;
     cursor: pointer !important;
     perspective: 1000px !important;
+    border: none;
+    background-color: inherit !important;
 }
 
 .card-inner {

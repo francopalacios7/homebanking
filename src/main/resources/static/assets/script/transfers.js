@@ -4,8 +4,8 @@ createApp({
   data() {
     return {
       numberOrigin: "",
-      numberForeign: "",
-      amount: 0.0,
+      numberForeign: [],
+      amount: 0,
       description: "",
       client: [],
       accounts: [],
@@ -33,19 +33,24 @@ createApp({
         .catch(error => console.log(error));
     },
     performTransfer() {
+      const originBalance = this.accounts.find(account => account.number == this.numberOrigin).balance
       if (this.numberOrigin == "" || this.numberForeign == "" || this.amount == 0.0 || this.description == "") {
         this.missingData();
         this.closeModal();
       }
-      else if (this.amount > this.numberOrigin.balance) {
+      else if (originBalance < this.amount) {
         this.notAmount()
         this.closeModal()
       }
-      else if (!this.accounts.find(account => account.number == this.numberOrigin)) {
+      else if(this.amount < 0){
+        this.notAmount()
+        this.closeModal()
+      }
+      else if (!this.accounts.find(account => account.number) == this.numberForeign.number) {
         this.notNumber()
         this.closeModal()
       }
-      else if (!this.accounts.find(account => account.number == this.numberForeign)) {
+      else if(this.numberOrigin == this.numberForeign){
         this.notNumber()
         this.closeModal()
       }
@@ -102,10 +107,6 @@ createApp({
   }
 
 }).mount("#app");
-
-
-
-/* hay que arreglar el de numbers */
 
  
        
