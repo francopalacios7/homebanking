@@ -5,14 +5,12 @@ import com.MindHub.HomeBanking.models.Account;
 import com.MindHub.HomeBanking.models.Client;
 import com.MindHub.HomeBanking.service.AccountService;
 import com.MindHub.HomeBanking.service.ClientService;
+import com.MindHub.HomeBanking.utils.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
@@ -22,29 +20,24 @@ import java.util.Set;
 @RequestMapping("/api")
 public class AccountController {
     @Autowired
-    AccountService accountService;
-
+    private AccountService accountService;
     @Autowired
     private ClientService clientService;
-
-    @RequestMapping("/accounts")
+    @GetMapping("/accounts")
     public List<AccountDTO> getAccounts() {
         return accountService.getAccountsDTO();
     }
-
-    @RequestMapping("/accounts/{id}")
+    @GetMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id) {
         return accountService.getAccountDTO(id);
     }
-
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> createAccount(Authentication authentication) {
         Client client = clientService.findByEmail(authentication.getName());
         Set<Account> authentifiedClientAccounts = client.getAccounts();
         String randomNum;
         do {
-            Random random = new Random();
-            randomNum = "VIN-" + random.nextInt(90000000);
+            randomNum = Utilities.accountNumberGenerator();
         } while (accountService.findByNumber(randomNum) != null);
         if (authentifiedClientAccounts.size() == 3) {
             return new ResponseEntity<>("Max amount of accounts reached", HttpStatus.FORBIDDEN);

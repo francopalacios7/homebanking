@@ -3,9 +3,9 @@ package com.MindHub.HomeBanking.controllers;
 import com.MindHub.HomeBanking.dtos.ClientDTO;
 import com.MindHub.HomeBanking.models.Account;
 import com.MindHub.HomeBanking.models.Client;
-import com.MindHub.HomeBanking.repositories.AccountRepository;
 import com.MindHub.HomeBanking.service.AccountService;
 import com.MindHub.HomeBanking.service.ClientService;
+import com.MindHub.HomeBanking.utils.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +26,15 @@ public class ClientController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     private String randomNum;
-
-    @RequestMapping ("/clients")
+    @GetMapping ("/clients")
     public List<ClientDTO> getClients() {
         return clientService.getClientsDTO();
     }
-    @RequestMapping("/clients/{id}")
+    @GetMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id ){
        return clientService.getClientDTO(id);
     }
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
@@ -48,8 +47,7 @@ public class ClientController {
             else{
                 Client client = clientService.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
                 do{
-                    Random random = new Random();
-                    randomNum = "VIN-" + random.nextInt(99999999);
+                    randomNum = Utilities.accountNumberGenerator();
                 }while (accountService.findByNumber(randomNum) != null);
                 Account account = new Account(randomNum, 0.0, LocalDate.now());
                 client.addAccount(account);
@@ -57,7 +55,7 @@ public class ClientController {
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
     }
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getAuthenticatedClient(Authentication authentication){
         return clientService.getAuthenticatedClientDTO(authentication);
     }

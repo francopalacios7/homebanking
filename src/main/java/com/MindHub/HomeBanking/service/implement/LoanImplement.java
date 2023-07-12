@@ -31,4 +31,8 @@ public class LoanImplement implements LoanService {
     public Loan findByName(String name) {
         return loanRepository.findByName(name);
     }
+    @Override
+    public Loan save(Loan loan) {
+        return loanRepository.save(loan);
+    }
 }
