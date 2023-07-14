@@ -27,7 +27,6 @@ public class CardController {
     public ResponseEntity<Object> createCard(Authentication authentication, @RequestParam CardColor color, @RequestParam CardType type) {
         String email = authentication.getName();
         Client client = clientService.findByEmail(email);
-        
         if (client == null) {
             return new ResponseEntity<>("Client not found", HttpStatus.NOT_FOUND);
         }

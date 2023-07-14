@@ -13,4 +13,14 @@ public class UtilitiesTest {
         String cardNumber = Utilities.cardNumberGenerator();
         assertThat(cardNumber,is(not(emptyOrNullString())));
     }
+    @Test
+    public void cvvNumberIsCreated(){
+        int cvv = Utilities.cvvGenerator();
+        assertThat(cvv,is(notNullValue()));
+    }
+    @Test
+    public void cvvSize(){
+        Integer cvv = Utilities.cvvGenerator();
+        assertThat(cvv.toString(),hasLength(3));
+    }
 }

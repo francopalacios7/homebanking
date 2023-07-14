@@ -12,7 +12,7 @@ import java.util.List;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
-public class RepositoriesTest {
+public class LoanTest {
     @Autowired
     LoanRepository loanRepository;
     @Test

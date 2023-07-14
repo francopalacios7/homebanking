@@ -15,9 +15,10 @@ import java.util.List;
 
 @SpringBootApplication
 public class HomeBankingApplication {
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         SpringApplication.run(HomeBankingApplication.class, args);
     }
+    /*
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Bean
