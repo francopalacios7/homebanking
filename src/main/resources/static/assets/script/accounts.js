@@ -5,7 +5,8 @@ createApp({
         return {
             clients: [],
             accounts: [],
-            loans: []
+            loans: [],
+            type: ""
         };
     },
     created() {
@@ -14,12 +15,13 @@ createApp({
     methods: {
         loadData() {
             axios
-                .get("http://localhost:8080/api/clients/current")
+                .get("/api/clients/current")
                 .then(response => {
                     this.clients = response.data;
                     this.accounts = this.clients.accounts.sort((a,b) => b.id - a.id )
                     this.loans = this.clients.loans.sort((a,b) => b.id - a.id )
-                    console.log(this.loans);
+                    console.log(this.accounts);
+                    
                 })
                 .catch(error => console.log(error));
         },
@@ -29,11 +31,25 @@ createApp({
             .catch(error => console.log(error))
         },
         createAccount(){
-            axios.post("http://localhost:8080/api/clients/current/accounts")
+            console.log(this.type);
+            axios.post('/api/clients/current/accounts','type=' + this.type)
             .then(response => {
                 this.loadData()
             })
             .catch(error => console.log(error))
+        },
+        deleteAccount(id){
+            axios.put(`/api/clients/current/accounts/${id}`)
+            .then(res => {
+                this.loadData()
+            })
+            .catch(err => console.log(err))
+        },
+        accountType(){
+            document.getElementById('account-type').style.display = 'block';
+        },
+        closeModal() {
+            document.getElementById('account-type').style.display = 'none';
         }
     }
 }).mount('#app');

@@ -18,7 +18,7 @@ createApp({
       loadData() {
         this.param = new URLSearchParams(document.location.search).get("id");
         axios
-          .get(`http://localhost:8080/api/clients/current`)
+          .get(`/api/clients/current`)
           .then((response) => {
             this.client = response.data
             this.account = this.client.accounts.find(account => account.id == this.param)
@@ -28,7 +28,7 @@ createApp({
             this.amount = new Intl.NumberFormat('en-US',{
               style: 'currency',
               currency: 'USD'
-            }) 
+            })
             console.log(response);
           })
           .catch((error) => console.log(error));

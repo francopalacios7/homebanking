@@ -2,6 +2,7 @@ package com.MindHub.HomeBanking.controllers;
 
 import com.MindHub.HomeBanking.dtos.ClientDTO;
 import com.MindHub.HomeBanking.models.Account;
+import com.MindHub.HomeBanking.models.AccountType;
 import com.MindHub.HomeBanking.models.Client;
 import com.MindHub.HomeBanking.service.AccountService;
 import com.MindHub.HomeBanking.service.ClientService;
@@ -37,7 +38,7 @@ public class ClientController {
     @PostMapping("/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password) {
+            @RequestParam String email, @RequestParam String password, @RequestParam AccountType type) {
             if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
                 return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
             }
@@ -49,7 +50,7 @@ public class ClientController {
                 do{
                     randomNum = Utilities.accountNumberGenerator();
                 }while (accountService.findByNumber(randomNum) != null);
-                Account account = new Account(randomNum, 0.0, LocalDate.now());
+                Account account = new Account(randomNum, 0.0, LocalDate.now(), true, type);
                 client.addAccount(account);
                 accountService.save(account);
                 return new ResponseEntity<>(HttpStatus.CREATED);

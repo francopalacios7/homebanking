@@ -38,6 +38,7 @@ public class LoanController {
         Set<Account> accounts = client.getAccounts();
         Loan loan = loanService.findByName(loanApplicationDTO.getName());
         Account accountDestination = accountService.findByNumber(loanApplicationDTO.getAccountNumber());
+        Double loanAmount = null;
         if (loanApplicationDTO.getAmount() == 0 || loanApplicationDTO.getPayment() == 0 || loanApplicationDTO.getAccountNumber().isBlank() || loanApplicationDTO.getName().isBlank()){
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
@@ -56,8 +57,18 @@ public class LoanController {
         if (!accounts.stream().anyMatch(account -> account.getNumber().equals(loanApplicationDTO.getAccountNumber()))){
             return new ResponseEntity<>("The account doesn't belong to this client", HttpStatus.FORBIDDEN);
         }
-        ClientLoan clientLoan = new ClientLoan(loanApplicationDTO.getAmount() + loanApplicationDTO.getAmount() * 0.2, loanApplicationDTO.getPayment());
-        Transaction loanTransaction = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loanApplicationDTO.getName() + " " + "loan approved", LocalDateTime.now());
+        if (loanApplicationDTO.getName().equals("Mortgage")){
+            loanAmount = loanApplicationDTO.getAmount() + loanApplicationDTO.getAmount() * 0.1;
+        }
+        if (loanApplicationDTO.getName().equals("Personal")){
+            loanAmount = loanApplicationDTO.getAmount() + loanApplicationDTO.getAmount() * 0.25;
+        }
+        if (loanApplicationDTO.getName().equals("Automotive")){
+            loanAmount = loanApplicationDTO.getAmount() + loanApplicationDTO.getAmount() * 0.2;
+        }
+        ClientLoan clientLoan = new ClientLoan(loanAmount, loanApplicationDTO.getPayment());
+        Double newBalance = accountDestination.getBalance()+loanApplicationDTO.getAmount();
+        Transaction loanTransaction = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loanApplicationDTO.getName() + " " + "loan approved", LocalDateTime.now(), newBalance);
         accountDestination.setBalance(accountDestination.getBalance() + loanApplicationDTO.getAmount());
         client.addClientLoan(clientLoan);
         loan.addLoan(clientLoan);
@@ -66,6 +77,16 @@ public class LoanController {
         transactionService.save(loanTransaction);
         clientLoanRepository.save(clientLoan);
         return new ResponseEntity<>("Loan successfully assigned",HttpStatus.CREATED);
+    }
+    @PostMapping("/admin/loans")
+    public ResponseEntity<Object> createLoan(Authentication authentication, @RequestBody LoanDTO loanDTO){
+        Client admin = clientService.findByEmail(authentication.getName());
+        if (loanDTO.getMaxAmount() == 0 || loanDTO.getPayments().isEmpty() || loanDTO.getName().isBlank()){
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        }
+        Loan loan = new Loan(loanDTO.getName(), loanDTO.getMaxAmount(), loanDTO.getPayments());
+        loanService.save(loan);
+        return new ResponseEntity<>("Loan successfully created",HttpStatus.CREATED);
     }
     @GetMapping("/loans")
     public List<LoanDTO> getLoans() {

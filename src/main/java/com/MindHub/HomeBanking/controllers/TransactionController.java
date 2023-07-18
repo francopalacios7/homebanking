@@ -54,8 +54,8 @@ public class TransactionController {
         if (tranferDTO.getAmount() > accountOrigin.getBalance()){
             return new ResponseEntity<>("Insufficient funds", HttpStatus.FORBIDDEN);
         }
-        Transaction transactionOrigin = new Transaction(TransactionType.DEBIT, -tranferDTO.getAmount(), tranferDTO.getDescription() + " " + tranferDTO.getNumberOrigin(), LocalDateTime.now());
-        Transaction transactionForeign = new Transaction(TransactionType.CREDIT, tranferDTO.getAmount(), tranferDTO.getDescription() + " " + tranferDTO.getNumberForeign(), LocalDateTime.now());
+        Transaction transactionOrigin = new Transaction(TransactionType.DEBIT, -tranferDTO.getAmount(), tranferDTO.getDescription() + " " + tranferDTO.getNumberOrigin(), LocalDateTime.now(), accountOrigin.getBalance() - tranferDTO.getAmount());
+        Transaction transactionForeign = new Transaction(TransactionType.CREDIT, tranferDTO.getAmount(), tranferDTO.getDescription() + " " + tranferDTO.getNumberForeign(), LocalDateTime.now(), accountForeign.getBalance() + tranferDTO.getAmount());
         accountOrigin.setBalance(accountOrigin.getBalance()-tranferDTO.getAmount());
         accountForeign.setBalance(accountForeign.getBalance()+tranferDTO.getAmount());
         accountOrigin.addTransaction(transactionOrigin);

@@ -22,5 +22,8 @@ public class AccountImplement implements AccountService {
     public AccountDTO getAccountDTO(Long id) {return accountRepository.findById(id).map(AccountDTO::new).orElse(null);}
     @Override
     public Account save(Account account) {return accountRepository.save(account);}
+
+    @Override
+    public Account findById(Long id) {return accountRepository.findById(id).orElse(null);}
 }
 

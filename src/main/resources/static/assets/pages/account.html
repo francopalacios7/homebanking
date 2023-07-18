@@ -67,6 +67,7 @@
               <th scope="col">Description</th>
               <th scope="col">Date</th>
               <th scope="col">Time</th>
+              <th scope="col">Balance</th>
             </tr>
           </thead>
           <tbody>
@@ -78,6 +79,7 @@
               <td>{{account.description}}</td>
               <td>{{account.dateTime.slice(0,10)}}</td>
               <td>{{account.dateTime.slice(11,-7)}}</td>
+              <td>${{account.balance.toLocaleString(2)}}</td>
             </tr>
           </tbody>
         </table>

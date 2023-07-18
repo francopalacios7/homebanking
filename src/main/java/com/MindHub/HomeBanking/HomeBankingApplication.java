@@ -18,7 +18,7 @@ public class HomeBankingApplication {
     public static void main(String[] args) {
         SpringApplication.run(HomeBankingApplication.class, args);
     }
-    /*
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Bean
@@ -30,27 +30,30 @@ public class HomeBankingApplication {
             Client client2 = new Client("Melba", "Morel", "melba@mindhub.com",passwordEncoder.encode("1234"));
             clientRepository.save(client2);
 
-            Account account1 = new Account("VIN001",  5000.0, LocalDate.now());
+            Client admin = new Client("Admin", "1", "admin@admin.com", passwordEncoder.encode("1234"));
+            clientRepository.save(admin);
+
+            Account account1 = new Account("VIN001",  5000.0, LocalDate.now(), true, AccountType.CURRENT);
             client2.addAccount(account1);
             accountRepository.save(account1);
 
-            Account account2 = new Account("VIN002",  7500.0, LocalDate.now().plusDays(1));
+            Account account2 = new Account("VIN002",  7500.0, LocalDate.now().plusDays(1), true, AccountType.CURRENT);
             client2.addAccount(account2);
             accountRepository.save(account2);
 
-            Account account3 = new Account("VIN003", 10000.0, LocalDate.now().minusDays(1));
+            Account account3 = new Account("VIN003", 10000.0, LocalDate.now().minusDays(1), true, AccountType.CURRENT);
             client1.addAccount(account3);
             accountRepository.save(account3);
 
-            Transaction transaction1 = new Transaction(TransactionType.DEBIT, -4500.0, "hola", LocalDateTime.now());
+            Transaction transaction1 = new Transaction(TransactionType.DEBIT, -4500.0, "hola", LocalDateTime.now(), 0.0);
             account2.addTransaction(transaction1);
             transactionRepository.save(transaction1);
 
-            Transaction transaction2= new Transaction(TransactionType.DEBIT, -4500000.0, "hola", LocalDateTime.now());
+            Transaction transaction2= new Transaction(TransactionType.DEBIT, -4500000.0, "hola", LocalDateTime.now(), 0.0);
             account2.addTransaction(transaction2);
             transactionRepository.save(transaction2);
 
-            Transaction transaction3= new Transaction(TransactionType.CREDIT, 4500.0, "hola", LocalDateTime.now());
+            Transaction transaction3= new Transaction(TransactionType.CREDIT, 4500.0, "hola", LocalDateTime.now(), 0.0);
             account2.addTransaction(transaction3);
             transactionRepository.save(transaction3);
 
@@ -86,17 +89,17 @@ public class HomeBankingApplication {
             loan2.addLoan(clientLoan4);
             clientLoanRepository.save(clientLoan4);
 
-            Card clientCard1 = new Card("MELBA MOREL", CardType.CREDIT, CardColor.GOLD, "1111-2222-3333-4444", 123, LocalDate.now().plusYears(5), LocalDate.now());
+            Card clientCard1 = new Card("MELBA MOREL", CardType.CREDIT, CardColor.GOLD, "1111-2222-3333-4444", 123, LocalDate.now().plusYears(5), LocalDate.now(), false);
             client2.addCard(clientCard1);
             cardRepository.save(clientCard1);
 
-            Card clientCard2 = new Card("MELBA MOREL", CardType.DEBIT, CardColor.TITANIUM, "1234-1234-1234-1234", 124, LocalDate.now().plusYears(5), LocalDate.now());
+            Card clientCard2 = new Card("MELBA MOREL", CardType.DEBIT, CardColor.TITANIUM, "1234-1234-1234-1234", 124, LocalDate.now().plusYears(5), LocalDate.now(), false);
             client2.addCard(clientCard2);
             cardRepository.save(clientCard2);
 
-            Card clientCard3 = new Card("FRANCO PALACIOS", CardType.DEBIT, CardColor.SILVER, "1345-1894-1674-1294", 393, LocalDate.now().plusYears(5), LocalDate.now());
+            Card clientCard3 = new Card("FRANCO PALACIOS", CardType.DEBIT, CardColor.SILVER, "1345-1894-1674-1294", 393, LocalDate.now().plusYears(5), LocalDate.now(), false);
             client1.addCard(clientCard3);
             cardRepository.save(clientCard3);
         };
-    }*/
+    }
 }

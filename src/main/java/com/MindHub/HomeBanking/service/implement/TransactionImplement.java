@@ -18,5 +18,6 @@ public class TransactionImplement implements TransactionService {
     private TransactionRepository transactionRepository;
     @Override
     public void save(Transaction transaction) {
+        transactionRepository.save(transaction);
     }
 }

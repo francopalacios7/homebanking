@@ -14,6 +14,7 @@ public class CardDTO {
     private Integer cvv;
     private LocalDate thruDate;
     private LocalDate fromDate;
+    private boolean isDeleted;
     public CardDTO(Card card) {
         this.id = card.getId();
         this.cardHolder = card.getCardHolder();
@@ -23,6 +24,7 @@ public class CardDTO {
         this.cvv = card.getCvv();
         this.thruDate = card.getThruDate();
         this.fromDate = card.getFromDate();
+        this.isDeleted = card.isDeleted();
     }
     public Long getId() {
         return id;
@@ -48,4 +50,5 @@ public class CardDTO {
     public LocalDate getFromDate() {
         return fromDate;
     }
+    public boolean isDeleted() {return isDeleted;}
 }

@@ -59,7 +59,7 @@
             <h2 class="m-5">Credit cards</h2>
             <div class="container d-flex flex-wrap rounded-5 m-md-4 ms-xxl-5">
                 <div v-for="card of cards">
-                    <div class="card d-flex m-3" v-if="card.type == 'CREDIT'"
+                    <div class="card d-flex m-3" v-if="card.type == 'CREDIT' && !card.deleted"
                         style="background-color: rgba(214, 214, 214, 0.447);">
                         <div class="card-inner rounded-2" v-if="card.color == 'GOLD'"
                             style="background-image: linear-gradient(45deg, #000000, #f09f14)">
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-inner" v-if="card.color == 'SILVER'"
+                        <div class="card-inner" v-if="card.color == 'SILVER' && !card.deleted"
                             style="background-image: linear-gradient(45deg, #000000, #d5d4d4)">
                             <div class="front">
                                 <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
@@ -131,7 +131,134 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-inner" v-if="card.color == 'TITANIUM'"
+                        <div class="card-inner" v-if="card.color == 'TITANIUM' && !card.deleted"
+                            style="background-image: linear-gradient(45deg, #000000, #000000); color: white">
+                            <div class="front  text-light">
+                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
+                                <div class="d-flex flex-row justify-content-between">
+                                    <img src="https://i.ibb.co/G9pDnYJ/chip.png" style="width: 60px;">
+                                    <p>{{card.type}}</p>
+                                </div>
+                                <div class="d-flex justify-content-center m-3 text-light">
+                                    <h3>{{card.number}}</h3>
+                                </div>
+                                <div class="d-flex justify-content-between text-light" id="data">
+                                    <p>CARD HOLDER</p>
+                                    <p>VALID TILL</p>
+                                </div>
+                                <div class="d-flex justify-content-between text-light">
+                                    <p>{{card.cardHolder}}</p>
+                                    <p>{{card.thruDate}}</p>
+                                </div>
+                            </div>
+                            <div class="back">
+                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
+                                <div class="bar"></div>
+                                <div class="row card-cvv">
+                                    <div>
+                                        <img src="https://i.ibb.co/S6JG8px/pattern.png">
+                                    </div>
+                                    <p>{{card.cvv}}</p>
+                                </div>
+                                <div class="row signature text-light">
+                                    <p>CUSTOMER SIGNATURE</p>
+                                    <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="80px">
+                                </div>
+                            </div>
+                        </div>
+                        <button @click="deleteCard(card.id)" class="bg-danger border-0"
+                            v-if="creditCards.length >= 1">Delete Card</button>
+                    </div>
+                </div>
+                <article v-if="creditCards.length < 3">
+                    <a href="./create-cards.html"
+                        class="border p-2 bg-dark-subtle d-flex flex-column align-items-center justify-content-center text-dark m-3"
+                        style="width: 400px; height: 250px;">
+                        <h5>Create credit cards</h5>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                            class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+                        </svg>
+                    </a>
+                </article>
+            </div>
+            <h2 class="m-5">Debit cards</h2>
+            <div class="container d-flex flex-wrap rounded-5 m-md-4 ms-xxl-5">
+                <div v-for="card of cards">
+                    <div class="card d-flex m-3" v-if="card.type == 'DEBIT' && !card.deleted"
+                        style="background-color: rgba(214, 214, 214, 0.447);">
+                        <div class="card-inner rounded-2" v-if="card.color == 'GOLD'"
+                            style="background-image: linear-gradient(45deg, #000000, #f09f14)">
+                            <div class="front">
+                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
+                                <div class="d-flex flex-row justify-content-between">
+                                    <img src="https://i.ibb.co/G9pDnYJ/chip.png" style="width: 60px;">
+                                    <p>{{card.type}}</p>
+                                </div>
+                                <div class="d-flex justify-content-center m-3 text-light">
+                                    <h3>{{card.number}}</h3>
+                                </div>
+                                <div class="d-flex justify-content-between text-light" id="data">
+                                    <p>CARD HOLDER</p>
+                                    <p>VALID TILL</p>
+                                </div>
+                                <div class="d-flex justify-content-between text-light">
+                                    <p>{{card.cardHolder}}</p>
+                                    <p>{{card.thruDate}}</p>
+                                </div>
+                            </div>
+                            <div class="back">
+                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
+                                <div class="bar"></div>
+                                <div class="row card-cvv">
+                                    <div>
+                                        <img src="https://i.ibb.co/S6JG8px/pattern.png">
+                                    </div>
+                                    <p>{{card.cvv}}</p>
+                                </div>
+                                <div class="row signature">
+                                    <p>CUSTOMER SIGNATURE</p>
+                                    <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="80px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-inner" v-if="card.color == 'SILVER' && !card.deleted"
+                            style="background-image: linear-gradient(45deg, #000000, #d5d4d4)">
+                            <div class="front">
+                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
+                                <div class="d-flex flex-row justify-content-between">
+                                    <img src="https://i.ibb.co/G9pDnYJ/chip.png" style="width: 60px;">
+                                    <p>{{card.type}}</p>
+                                </div>
+                                <div class="d-flex justify-content-center m-3 text-light">
+                                    <h3>{{card.number}}</h3>
+                                </div>
+                                <div class="d-flex justify-content-between text-light" id="data">
+                                    <p>CARD HOLDER</p>
+                                    <p>VALID TILL</p>
+                                </div>
+                                <div class="d-flex justify-content-between text-light">
+                                    <p>{{card.cardHolder}}</p>
+                                    <p>{{card.thruDate}}</p>
+                                </div>
+                            </div>
+                            <div class="back">
+                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
+                                <div class="bar"></div>
+                                <div class="row card-cvv">
+                                    <div>
+                                        <img src="https://i.ibb.co/S6JG8px/pattern.png">
+                                    </div>
+                                    <p>{{card.cvv}}</p>
+                                </div>
+                                <div class="row signature">
+                                    <p>CUSTOMER SIGNATURE</p>
+                                    <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="80px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-inner" v-if="card.color == 'TITANIUM' && !card.deleted"
                             style="background-image: linear-gradient(45deg, #000000, #000000); color: white">
                             <div class="front  text-light">
                                 <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
@@ -167,130 +294,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <article v-if="creditCards.length < 3">
-                    <a href="./create-cards.html"
-                        class="border p-2 bg-dark-subtle d-flex flex-column align-items-center justify-content-center text-dark m-3"
-                        style="width: 400px; height: 250px;">
-                        <h5>Create credit cards</h5>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
-                            class="bi bi-arrow-left-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
-                        </svg>
-                    </a>
-                </article>
-            </div>
-            <h2 class="m-5">Debit cards</h2>
-            <div class="container d-flex flex-wrap rounded-5 m-md-4 ms-xxl-5">
-                <div v-for="card of cards">
-                    <div class="card d-flex m-3" v-if="card.type == 'DEBIT'"
-                        style="background-color: rgba(214, 214, 214, 0.447);">
-                        <div class="card-inner rounded-2" v-if="card.color == 'GOLD'"
-                            style="background-image: linear-gradient(45deg, #000000, #f09f14)">
-                            <div class="front">
-                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <img src="https://i.ibb.co/G9pDnYJ/chip.png" style="width: 60px;">
-                                    <p>{{card.type}}</p>
-                                </div>
-                                <div class="d-flex justify-content-center m-3 text-light">
-                                    <h3>{{card.number}}</h3>
-                                </div>
-                                <div class="d-flex justify-content-between text-light" id="data">
-                                    <p>CARD HOLDER</p>
-                                    <p>VALID TILL</p>
-                                </div>
-                                <div class="d-flex justify-content-between text-light">
-                                    <p>{{card.cardHolder}}</p>
-                                    <p>{{card.thruDate}}</p>
-                                </div>
-                            </div>
-                            <div class="back">
-                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
-                                <div class="bar"></div>
-                                <div class="row card-cvv">
-                                    <div>
-                                        <img src="https://i.ibb.co/S6JG8px/pattern.png">
-                                    </div>
-                                    <p>{{card.cvv}}</p>
-                                </div>
-                                <div class="row signature">
-                                    <p>CUSTOMER SIGNATURE</p>
-                                    <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="80px">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-inner" v-if="card.color == 'SILVER'"
-                            style="background-image: linear-gradient(45deg, #000000, #d5d4d4)">
-                            <div class="front">
-                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <img src="https://i.ibb.co/G9pDnYJ/chip.png" style="width: 60px;">
-                                    <p>{{card.type}}</p>
-                                </div>
-                                <div class="d-flex justify-content-center m-3 text-light">
-                                    <h3>{{card.number}}</h3>
-                                </div>
-                                <div class="d-flex justify-content-between text-light" id="data">
-                                    <p>CARD HOLDER</p>
-                                    <p>VALID TILL</p>
-                                </div>
-                                <div class="d-flex justify-content-between text-light">
-                                    <p>{{card.cardHolder}}</p>
-                                    <p>{{card.thruDate}}</p>
-                                </div>
-                            </div>
-                            <div class="back">
-                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
-                                <div class="bar"></div>
-                                <div class="row card-cvv">
-                                    <div>
-                                        <img src="https://i.ibb.co/S6JG8px/pattern.png">
-                                    </div>
-                                    <p>{{card.cvv}}</p>
-                                </div>
-                                <div class="row signature">
-                                    <p>CUSTOMER SIGNATURE</p>
-                                    <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="80px">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-inner" v-if="card.color == 'TITANIUM'"
-                            style="background-image: linear-gradient(45deg, #000000, #000000); color: white">
-                            <div class="front  text-light">
-                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <img src="https://i.ibb.co/G9pDnYJ/chip.png" style="width: 60px;">
-                                    <p>{{card.type}}</p>
-                                </div>
-                                <div class="d-flex justify-content-center m-3 text-light">
-                                    <h3>{{card.number}}</h3>
-                                </div>
-                                <div class="d-flex justify-content-between text-light" id="data">
-                                    <p>CARD HOLDER</p>
-                                    <p>VALID TILL</p>
-                                </div>
-                                <div class="d-flex justify-content-between text-light">
-                                    <p>{{card.cardHolder}}</p>
-                                    <p>{{card.thruDate}}</p>
-                                </div>
-                            </div>
-                            <div class="back">
-                                <img src="https://i.ibb.co/PYss3yv/map.png" class="map-img">
-                                <div class="bar"></div>
-                                <div class="row card-cvv">
-                                    <div>
-                                        <img src="https://i.ibb.co/S6JG8px/pattern.png">
-                                    </div>
-                                    <p>{{card.cvv}}</p>
-                                </div>
-                                <div class="row signature text-light">
-                                    <p>CUSTOMER SIGNATURE</p>
-                                    <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="80px">
-                                </div>
-                            </div>
-                        </div>
+                    <button @click="deleteCard(card.id)" class="bg-danger border-0" v-if="debitCards.length >= 1">Delete
+                        Card</button>
+                    <div>
+                        <p v-if="card.thruDate <= getCurrentDate()" class="text-dark">This card is expired</p>
                     </div>
                 </div>
                 <article v-if="debitCards.length < 3">

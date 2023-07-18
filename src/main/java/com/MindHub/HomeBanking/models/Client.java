@@ -60,6 +60,9 @@ public class Client {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public void setAccountSet(Set<Account> accountSet) {this.accountSet = accountSet;}
+    public void setClientLoanSet(Set<ClientLoan> clientLoanSet) {this.clientLoanSet = clientLoanSet;}
+    public void setCardSet(Set<Card> cardSet) {this.cardSet = cardSet;}
     public String getEmail() {
         return email;
     }

@@ -2,6 +2,7 @@ package com.MindHub.HomeBanking.controllers;
 
 import com.MindHub.HomeBanking.dtos.AccountDTO;
 import com.MindHub.HomeBanking.models.Account;
+import com.MindHub.HomeBanking.models.AccountType;
 import com.MindHub.HomeBanking.models.Client;
 import com.MindHub.HomeBanking.service.AccountService;
 import com.MindHub.HomeBanking.service.ClientService;
@@ -13,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 @RestController
@@ -32,7 +32,7 @@ public class AccountController {
         return accountService.getAccountDTO(id);
     }
     @PostMapping("/clients/current/accounts")
-    public ResponseEntity<Object> createAccount(Authentication authentication) {
+    public ResponseEntity<Object> createAccount(Authentication authentication, @RequestParam AccountType type) {
         Client client = clientService.findByEmail(authentication.getName());
         Set<Account> authentifiedClientAccounts = client.getAccounts();
         String randomNum;
@@ -41,11 +41,25 @@ public class AccountController {
         } while (accountService.findByNumber(randomNum) != null);
         if (authentifiedClientAccounts.size() == 3) {
             return new ResponseEntity<>("Max amount of accounts reached", HttpStatus.FORBIDDEN);
-        } else {
-            Account account = new Account(randomNum, 0.0, LocalDate.now());
+        } else{
+            Account account = new Account(randomNum, 0.0, LocalDate.now(), true, type);
             client.addAccount(account);
             accountService.save(account);
             return new ResponseEntity<>("Created", HttpStatus.CREATED);
+        }
+    }
+    @PutMapping("/clients/current/accounts/{id}")
+    public ResponseEntity<Object> deleteAccount(Authentication authentication, @PathVariable Long id){
+        Client client = clientService.findByEmail(authentication.getName());
+        Account accountToDelete = accountService.findById(id);
+        accountToDelete.setActive(false);
+        accountService.save(accountToDelete);
+        if (!client.getAccounts().contains(accountToDelete)){
+            return new ResponseEntity<>("The account doesn't belong to this client", HttpStatus.FORBIDDEN);
+        }if (accountToDelete.getBalance() != 0){
+            return new ResponseEntity<>("The balance must be 0", HttpStatus.FORBIDDEN);
+        }else {
+            return new ResponseEntity<>("Account eliminated", HttpStatus.ACCEPTED);
         }
     }
 }

@@ -71,7 +71,7 @@
                     <label for="origin" class="d-flex flex-column">
                         Origin account:
                         <select type="text" name="accounts" id="accounts" v-model="numberOrigin">
-                            <template v-for="account of accounts">
+                            <template v-for="account of accountsActive">
                                 <option :value="account.number">{{account.number}}</option>
                             </template>
                         </select>

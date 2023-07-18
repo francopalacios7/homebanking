@@ -7,7 +7,6 @@ import com.MindHub.HomeBanking.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class CardImplement implements CardService {
     @Autowired
@@ -17,6 +16,8 @@ public class CardImplement implements CardService {
     private String randomNum;
     @Override
     public Card findByNumber(String number) {return cardRepository.findByNumber(number);}
+    @Override
+    public Card findById(Long id){return cardRepository.findById(id).orElse(null);}
     @Override
     public void save(Card card) {cardRepository.save(card);}
 }

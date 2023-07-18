@@ -64,17 +64,24 @@
             <h1 class="card-title text-dark ps-md-5">Welcome {{clients.firstName}}!</h1>
             <h5 class="ps-md-5">Accounts State</h5>
           </div>
-          <div class="d-md-flex flex-md-wrap justify-content-md-center">
-            <div class="bg-light flex-wrap flex-column m-3 p-3 shadow" v-for="account of accounts" id="account" >
-              <h5>Account N°: {{account.number}}</h5>
-              <p class="d-flex">Balance:</p>
-              <h4>${{account.balance.toLocaleString(2)}}</h4>
-              <div class="d-flex flex-column justify-content-between d-md-flex flex-md-row gap-5">
-                <p class="">Creation Date: {{account.creationDate}}</p>
-                <p>Premium</p>
+          <div>
+            <div class="d-md-flex flex-md-wrap justify-content-md-center">
+              <div class="bg-light flex-wrap flex-column m-3 p-3 shadow" v-for="account of accounts" id="account">
+                <div v-if="account.active == true">
+                  <h5>Account N°: {{account.number}}</h5>
+                  <p class="d-flex">Balance:</p>
+                  <h4>${{account.balance.toLocaleString(2)}}</h4>
+                  <div class="d-flex flex-column justify-content-between d-md-flex flex-md-row gap-5">
+                    <p>Creation Date: {{account.creationDate}}</p>
+                    <p>{{account.type}}</p>
+                  </div>
+                  <p class="btn rounded-1 w-75" style="background-color:  #ffb300;"><a
+                      :href="'./account.html?id='+account.id" class="text-light">Transactions</a></p>
+                  <p class="btn rounded-1 w-75" style="background-color: #ffb300;" @click="deleteAccount(account.id)"
+                    class="text-light">
+                    Delete account</p>
+                </div>
               </div>
-              <p class="btn rounded-1 w-75" style="background-color:  #ffb300;;"><a
-                  :href="'./account.html?id='+account.id" class="text-light">Transactions</a></p>
             </div>
           </div>
           <nav class="w-100 d-flex flex-column ps-md-5 pe-md-5" id="nav2">
@@ -84,7 +91,10 @@
               <li class="list-group-item"><a href="./loan-application.html" class="text-dark">Request a loan</a></li>
               <li class="list-group-item text-dark">Invest</li>
               <li class="list-group-item text-dark">
-                <button @click="createAccount" v-if="accounts.length < 3" class="bg-white border-0">Create account</button>
+                <div @click="accountType">
+                  <button v-if="accounts.length < 3" class="bg-white border-0">Create
+                    account</button>
+                </div>
               </li>
               <li class="list-group-item text-dark"><a href="./transfers.html" class="text-dark">Transfer</a></li>
             </ul>
@@ -117,6 +127,20 @@
       <div id="coinmarketcap-widget-marquee" coins="1,1027,825,19556,7919,18878" currency="USD" theme="light"
         transparent="false" show-symbol-logo="true">
       </div>
+      <div id="account-type" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal">&times;</span>
+          <p class="d-flex justify-content-center">Select an account type:</p>
+          <div class="d-flex flex-column align-items-center">
+            <div class="d-flex justify-content-evenly gap-5">
+              <input type="radio" class="text-light p-5" value="CURRENT" v-model="type">Current</input>
+              <input type="radio" class="text-light p-5" value="SAVING" v-model="type">Saving</input>
+            </div>
+            <input type="submit" @click="createAccount" value="Confirm"
+              class="w-25 d-flex justify-content-center border-0" style="background-color: #ffb300;"></input>
+          </div>
+        </div>
+      </div>
     </main>
     <footer class="d-flex align-items-center p-3" style="background-color: #ffb300;">
       <a href="https://www.linkedin.com/in/franco-palacios-0a45ab26a/" target="_blank" class="text-dark"><svg
@@ -145,8 +169,11 @@
           <path
             d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034v.21Zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791Z" />
         </svg></a>
-        <a href="https://github.com/francopalacios7" target="_blank" class="text-dark"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-github m-2" viewBox="0 0 16 16">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+      <a href="https://github.com/francopalacios7" target="_blank" class="text-dark"><svg
+          xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-github m-2"
+          viewBox="0 0 16 16">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
         </svg></a>
     </footer>
     <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/coinMarquee.js"></script>

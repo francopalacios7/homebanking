@@ -10,7 +10,8 @@ createApp({
       client: [],
       accounts: [],
       endModal: true,
-      radio: ""
+      radio: "",
+      accountsActive: []
     }
   },
   created() {
@@ -23,6 +24,7 @@ createApp({
         .then(response => {
           this.client = response.data;
           this.accounts = this.client.accounts;
+          this.accountsActive = this.accounts.filter(account => account.active)
         })
         .catch(error => console.log(error));
     },
@@ -60,7 +62,7 @@ createApp({
             "numberOrigin": this.numberOrigin,
             "numberForeign": this.numberForeign,
             "amount": this.amount,
-            "description": this.description
+            "description": this.description,
           })
           .then(res => {
             this.loadData();

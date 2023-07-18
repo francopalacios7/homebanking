@@ -15,16 +15,20 @@ public class Account {
     private String number;
     private double balance;
     private LocalDate creationDate;
+    private boolean isActive;
+    private AccountType accountType;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
     @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
     Set<Transaction> transactionSet = new HashSet<>();
     public Account() { }
-    public Account(String number, double balance, LocalDate date){
+    public Account(String number, double balance, LocalDate date, boolean isActive, AccountType type){
         this.number = number;
         this.balance = balance;
         creationDate = date;
+        this.isActive = isActive;
+        accountType = type;
     }
     public Set<Transaction> getTransactionSet(){ return transactionSet; }
     public void addTransaction(Transaction transaction) {
@@ -48,4 +52,9 @@ public class Account {
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
+    public boolean isActive() {return isActive;}
+    public void setActive(boolean active) {isActive = active;}
+    public void setTransactionSet(Set<Transaction> transactionSet) {this.transactionSet = transactionSet;}
+    public AccountType getAccountType() {return accountType;}
+    public void setAccountType(AccountType accountType) {this.accountType = accountType;}
 }

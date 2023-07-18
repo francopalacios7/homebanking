@@ -9,4 +9,5 @@ public interface AccountService {
     List<AccountDTO> getAccountsDTO();
     AccountDTO getAccountDTO(Long id);
     Account save(Account account);
+    Account findById(Long id);
 }

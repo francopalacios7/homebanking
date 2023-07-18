@@ -17,11 +17,12 @@ public class Card {
     private Integer cvv;
     private LocalDate thruDate;
     private LocalDate fromDate;
+    private boolean isDeleted;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
     private  Card (){}
-    public Card(String cardHolder, CardType type, CardColor color, String number, Integer cvv, LocalDate thruDate, LocalDate fromDate) {
+    public Card(String cardHolder, CardType type, CardColor color, String number, Integer cvv, LocalDate thruDate, LocalDate fromDate, boolean isDeleted) {
         this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
@@ -29,6 +30,7 @@ public class Card {
         this.cvv = cvv;
         this.thruDate = thruDate;
         this.fromDate = fromDate;
+        this.isDeleted = isDeleted;
     }
     public Long getId() {
         return id;
@@ -77,4 +79,6 @@ public class Card {
     }
     public Client getClient() {return client;}
     public void setClient(Client client) {this.client = client;}
+    public boolean isDeleted() {return isDeleted;}
+    public void setDeleted(boolean deleted) {isDeleted = deleted;}
 }
