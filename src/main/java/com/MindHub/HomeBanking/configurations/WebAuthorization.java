@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +23,7 @@ public class WebAuthorization{
         http.authorizeRequests()
                 .antMatchers("/assets/pages/home.html","/assets/pages/login.html","/assets/pages/signup.html","/assets/style/**","/assets/script/**","/assets/images/**","/api/login","/api/logout","/assets/pages/more-info.html", "/assets/pages/loan-application.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/cards/payment").permitAll()
                 .antMatchers("/manager.html", "/h2-console","/api/clients").hasAuthority("ADMIN")
                 .antMatchers("/assets/pages/accounts.html").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/admin/loans").hasAuthority("ADMIN")
@@ -46,6 +50,7 @@ public class WebAuthorization{
         // turn off checking for CSRF tokens
         http.csrf().disable();
         //disabling frameOptions so h2-console can be accessed
+        http.cors();
         http.headers().frameOptions().disable();
         // if user is not authenticated, just send an authentication failure response
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
@@ -62,5 +67,17 @@ public class WebAuthorization{
         if (session != null) {
             session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
+    }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("http://localhost:5500")
+                        .allowedOrigins("http://localhost:8080")
+                        .allowedMethods("POST")
+                        .allowedHeaders("*");
+            }
+        };
     }
 }

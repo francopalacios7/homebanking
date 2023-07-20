@@ -1,20 +1,21 @@
 package com.MindHub.HomeBanking.controllers;
 
-import com.MindHub.HomeBanking.models.Card;
-import com.MindHub.HomeBanking.models.CardColor;
-import com.MindHub.HomeBanking.models.CardType;
-import com.MindHub.HomeBanking.models.Client;
+import com.MindHub.HomeBanking.dtos.CardPaymentDTO;
+import com.MindHub.HomeBanking.models.*;
+import com.MindHub.HomeBanking.service.AccountService;
 import com.MindHub.HomeBanking.service.CardService;
 import com.MindHub.HomeBanking.service.ClientService;
+import com.MindHub.HomeBanking.service.TransactionService;
 import com.MindHub.HomeBanking.utils.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -23,6 +24,10 @@ public class CardController {
     private CardService cardService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private TransactionService transactionService;
     private String randomNum;
     private Integer cvv;
     @PostMapping("/clients/current/cards")
@@ -62,5 +67,28 @@ public class CardController {
         }else {
             return new ResponseEntity<>("Card not found or not owned by the client", HttpStatus.NOT_FOUND);
         }
+    }
+    @Transactional
+    @CrossOrigin(origins = "http://localhost:8080")
+    @PostMapping("/cards/payment")
+    public ResponseEntity<Object> cardPayment(@RequestBody CardPaymentDTO cardPaymentDTO){
+        Card card = cardService.findByNumber(cardPaymentDTO.getNumber());
+        Client client = card.getClient();
+        Set<Account> clientAccounts = client.getAccounts();
+        Account account = clientAccounts.stream().filter(acc -> acc.getBalance() > cardPaymentDTO.getAmount()).findFirst().orElse(null);
+        if (cardPaymentDTO.getNumber().isBlank() || cardPaymentDTO.getCvv() == null || cardPaymentDTO.getAmount().isNaN() || cardPaymentDTO.getDescription().isBlank()){
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        }
+        if (LocalDate.now().isAfter(card.getThruDate())){
+            return new ResponseEntity<>("The card is expired", HttpStatus.FORBIDDEN);
+        }
+        if (account.getBalance() < cardPaymentDTO.getAmount()){
+            return new ResponseEntity<>("Insufficient funds", HttpStatus.FORBIDDEN);
+        }
+        Transaction transaction = new Transaction(TransactionType.DEBIT, cardPaymentDTO.getAmount(), cardPaymentDTO.getDescription() + " " + account.getNumber(), LocalDateTime.now(), account.getBalance() - cardPaymentDTO.getAmount());
+        account.setBalance(account.getBalance() - cardPaymentDTO.getAmount());
+        accountService.save(account);
+        transactionService.save(transaction);
+        return new ResponseEntity<>("Transfer successful", HttpStatus.ACCEPTED);
     }
 }
