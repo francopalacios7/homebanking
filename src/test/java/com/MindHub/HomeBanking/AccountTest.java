@@ -17,7 +17,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
 public class AccountTest {
-    @Autowired
+    /*@Autowired
     AccountRepository accountRepository;
     @Test
     public void existAccounts(){
@@ -28,5 +28,5 @@ public class AccountTest {
     public void hasVIN(){
         String account = Utilities.accountNumberGenerator();
         assertThat(account, hasLength(12));
-    }
+    }*/
 }

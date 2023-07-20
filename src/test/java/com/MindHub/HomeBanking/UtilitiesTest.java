@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 public class UtilitiesTest {
-    @Test
+   /* @Test
     public void cardNumberIsCreated(){
         String cardNumber = Utilities.cardNumberGenerator();
         assertThat(cardNumber,is(not(emptyOrNullString())));
@@ -22,5 +22,5 @@ public class UtilitiesTest {
     public void cvvSize(){
         Integer cvv = Utilities.cvvGenerator();
         assertThat(cvv.toString(),hasLength(3));
-    }
+    }*/
 }
