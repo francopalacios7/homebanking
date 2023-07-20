@@ -14,16 +14,18 @@ public class Loan {
     private Long id;
     private String name;
     private Double maxAmount;
+    private Double percentage;
     @ElementCollection
     @Column(name="payment")
     private List<Integer> payments;
     @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoanSet = new HashSet<>();
     public Loan(){}
-    public Loan(String name, Double maxAmount, List<Integer> payments) {
+    public Loan(String name, Double maxAmount, List<Integer> payments, Double percentage) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+        this.percentage = percentage;
     }
     public Set<ClientLoan> getClientSet(){return clientLoanSet;}
     public void addLoan(ClientLoan clientLoan) {
@@ -51,4 +53,6 @@ public class Loan {
     public void setPayments(List<Integer> payments) {
         this.payments = payments;
     }
+    public Double getPercentage() {return percentage;}
+    public void setPercentage(Double percentage) {this.percentage = percentage;}
 }

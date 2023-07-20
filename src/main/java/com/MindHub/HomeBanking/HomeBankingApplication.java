@@ -30,7 +30,7 @@ public class HomeBankingApplication {
             Client client2 = new Client("Melba", "Morel", "melba@mindhub.com",passwordEncoder.encode("1234"));
             clientRepository.save(client2);
 
-            Client admin = new Client("Admin", "1", "admin@admin.com", passwordEncoder.encode("1234"));
+            Client admin = new Client("Admin", "1", "admin.admin@admin.com", passwordEncoder.encode("1234"));
             clientRepository.save(admin);
 
             Account account1 = new Account("VIN001",  5000.0, LocalDate.now(), true, AccountType.CURRENT);
@@ -61,9 +61,9 @@ public class HomeBankingApplication {
             List<Integer> personalPayments = List.of(6,12,24);
             List<Integer> automotivePayments = List.of(6,12,24,36);
 
-            Loan loan1= new Loan("Mortgage",500000.0, mortgagePayments);
-            Loan loan2= new Loan("Personal",100000.0, personalPayments);
-            Loan loan3= new Loan("Automotive",300000.0, automotivePayments);
+            Loan loan1= new Loan("Mortgage",500000.0, mortgagePayments, 0.1);
+            Loan loan2= new Loan("Personal",100000.0, personalPayments, 0.25);
+            Loan loan3= new Loan("Automotive",300000.0, automotivePayments, 0.2);
 
             loanRepository.save(loan1);
             loanRepository.save(loan2);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -34,7 +35,7 @@ public class AccountController {
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> createAccount(Authentication authentication, @RequestParam AccountType type) {
         Client client = clientService.findByEmail(authentication.getName());
-        Set<Account> authentifiedClientAccounts = client.getAccounts();
+        Set<Account> authentifiedClientAccounts = client.getAccounts().stream().filter(account -> account.isActive() == true).collect(Collectors.toSet());
         String randomNum;
         do {
             randomNum = Utilities.accountNumberGenerator();
@@ -62,4 +63,5 @@ public class AccountController {
             return new ResponseEntity<>("Account eliminated", HttpStatus.ACCEPTED);
         }
     }
+
 }

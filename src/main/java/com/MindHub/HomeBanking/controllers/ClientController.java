@@ -38,7 +38,7 @@ public class ClientController {
     @PostMapping("/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password, @RequestParam AccountType type) {
+            @RequestParam String email, @RequestParam String password) {
             if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
                 return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
             }
@@ -50,7 +50,7 @@ public class ClientController {
                 do{
                     randomNum = Utilities.accountNumberGenerator();
                 }while (accountService.findByNumber(randomNum) != null);
-                Account account = new Account(randomNum, 0.0, LocalDate.now(), true, type);
+                Account account = new Account(randomNum, 0.0, LocalDate.now(), true, AccountType.CURRENT);
                 client.addAccount(account);
                 accountService.save(account);
                 return new ResponseEntity<>(HttpStatus.CREATED);

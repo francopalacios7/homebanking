@@ -4,10 +4,7 @@ import com.MindHub.HomeBanking.dtos.LoanApplicationDTO;
 import com.MindHub.HomeBanking.dtos.LoanDTO;
 import com.MindHub.HomeBanking.models.*;
 import com.MindHub.HomeBanking.repositories.ClientLoanRepository;
-import com.MindHub.HomeBanking.service.AccountService;
-import com.MindHub.HomeBanking.service.ClientService;
-import com.MindHub.HomeBanking.service.LoanService;
-import com.MindHub.HomeBanking.service.TransactionService;
+import com.MindHub.HomeBanking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +25,9 @@ public class LoanController {
     @Autowired
     AccountService accountService;
     @Autowired
-    ClientLoanRepository clientLoanRepository;
-    @Autowired
     TransactionService transactionService;
+    @Autowired
+    ClientLoanService clientLoanService;
     @Transactional
     @PostMapping("/loans")
     public ResponseEntity<Object> loan(Authentication authentication, @RequestBody LoanApplicationDTO loanApplicationDTO){
@@ -75,18 +72,48 @@ public class LoanController {
         accountDestination.addTransaction(loanTransaction);
         accountService.save(accountDestination);
         transactionService.save(loanTransaction);
-        clientLoanRepository.save(clientLoan);
+        clientLoanService.save(clientLoan);
         return new ResponseEntity<>("Loan successfully assigned",HttpStatus.CREATED);
     }
     @PostMapping("/admin/loans")
     public ResponseEntity<Object> createLoan(Authentication authentication, @RequestBody LoanDTO loanDTO){
         Client admin = clientService.findByEmail(authentication.getName());
-        if (loanDTO.getMaxAmount() == 0 || loanDTO.getPayments().isEmpty() || loanDTO.getName().isBlank()){
+        if (loanDTO.getMaxAmount() == 0 || loanDTO.getPayments().isEmpty() || loanDTO.getName().isBlank() || loanDTO.getPercentage() == 0){
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
-        Loan loan = new Loan(loanDTO.getName(), loanDTO.getMaxAmount(), loanDTO.getPayments());
+        Loan loan = new Loan(loanDTO.getName(), loanDTO.getMaxAmount(), loanDTO.getPayments(), loanDTO.getPercentage());
         loanService.save(loan);
         return new ResponseEntity<>("Loan successfully created",HttpStatus.CREATED);
+    }
+    @Transactional
+    @PostMapping("/clients/current/loans")
+    public ResponseEntity<Object> payFee(Authentication authentication, @RequestParam String accountNumber, @RequestParam Long id){
+        Client client = clientService.findByEmail(authentication.getName());
+        Account account = accountService.findByNumber(accountNumber);
+        ClientLoan clientLoan = clientLoanService.findById(id);
+        Double feeToPay = clientLoan.getAmount() / clientLoan.getPayments();
+        if (accountNumber.isBlank()){
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        }
+        if (client == null) {
+            return new ResponseEntity<>("This client doesn't exist", HttpStatus.FORBIDDEN);
+        }
+        if (account == null) {
+            return new ResponseEntity<>("The account doesn't exist", HttpStatus.FORBIDDEN);
+        }
+        if (clientLoan == null) {
+            return new ResponseEntity<>("The loan with the specified ID doesn't exist", HttpStatus.FORBIDDEN);
+        }
+        if (account.getBalance() < feeToPay){
+            return new ResponseEntity<>("Insufficient funds", HttpStatus.FORBIDDEN);
+        }
+        Transaction transaction = new Transaction(TransactionType.DEBIT, feeToPay, "Payed fee" + " " + accountNumber, LocalDateTime.now(), account.getBalance() - feeToPay);
+        clientLoan.setRemainingAmount(clientLoan.getAmount() - feeToPay);
+        account.setBalance(account.getBalance() - feeToPay);
+        clientLoan.setRemainingPayments(clientLoan.getPayments() - 1);
+        transactionService.save(transaction);
+        accountService.save(account);
+        return new ResponseEntity<>("Fee payed with success", HttpStatus.ACCEPTED);
     }
     @GetMapping("/loans")
     public List<LoanDTO> getLoans() {

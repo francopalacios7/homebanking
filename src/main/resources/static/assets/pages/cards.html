@@ -294,11 +294,11 @@
                             </div>
                         </div>
                     </div>
-                    <button @click="deleteCard(card.id)" class="bg-danger border-0" v-if="debitCards.length >= 1">Delete
-                        Card</button>
                     <div>
                         <p v-if="card.thruDate <= getCurrentDate()" class="text-dark">This card is expired</p>
                     </div>
+                    <button @click="deleteCard(card.id)" class="bg-danger border-0">Delete
+                        Card</button>
                 </div>
                 <article v-if="debitCards.length < 3">
                     <a href="./create-cards.html"

@@ -6,7 +6,8 @@ createApp({
             clients: [],
             accounts: [],
             loans: [],
-            type: ""
+            type: "",
+            accountsActive: []
         };
     },
     created() {
@@ -21,7 +22,7 @@ createApp({
                     this.accounts = this.clients.accounts.sort((a,b) => b.id - a.id )
                     this.loans = this.clients.loans.sort((a,b) => b.id - a.id )
                     console.log(this.accounts);
-                    
+                    this.accountsActive = this.accounts.filter(account => account.active == true)
                 })
                 .catch(error => console.log(error));
         },
