@@ -10,19 +10,19 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @EnableWebSecurity
 @Configuration
-public class WebAuthorization{
+public class WebAuthorization implements WebMvcConfigurer {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/assets/pages/home.html","/assets/pages/login.html","/assets/pages/signup.html","/assets/style/**","/assets/script/**","/assets/images/**","/api/login","/api/logout","/assets/pages/more-info.html", "/assets/pages/loan-application.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+                .antMatchers(HttpMethod.POST,"api/login", "/api/logout").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/cards/payment").permitAll()
                 .antMatchers("/manager.html", "/h2-console","/api/clients").hasAuthority("ADMIN")
                 .antMatchers("/assets/pages/accounts.html").hasAuthority("ADMIN")
@@ -40,8 +40,8 @@ public class WebAuthorization{
                                         "/assets/pages/create-cards.html",
                                         "/api/clients/current",
                                         "/api/loans",
-                        "/assets/pages/transfers.html").hasAuthority("CLIENT");
-                        /*.anyRequest().denyAll();*/
+                        "/assets/pages/transfers.html").hasAuthority("CLIENT")
+                        .anyRequest().denyAll();
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
@@ -68,16 +68,13 @@ public class WebAuthorization{
             session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
     }
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("http://localhost:5500")
-                        .allowedOrigins("http://localhost:8080")
+                registry.addMapping("/**")
+                        .allowedOrigins("http://127.0.0.1:5500")
                         .allowedMethods("POST")
                         .allowedHeaders("*");
             }
-        };
     }
-}
+
+

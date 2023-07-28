@@ -10,10 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClientLoanImplement implements ClientLoanService {
     @Autowired
-    ClientLoanRepository clientLoanRepository;
+    private ClientLoanRepository clientLoanRepository;
     @Override
     public ClientLoan findById(Long id) {return clientLoanRepository.findById(id).orElse(null);}
     @Override
     public ClientLoan save(ClientLoan clientLoan) {return clientLoanRepository.save(clientLoan);}
-
 }

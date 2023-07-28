@@ -57,7 +57,7 @@
     </nav>
     <main class="flex-grow-1 d-flex flex-column justify-content-between ">
       <div class="d-sm-flex flex-sm-wrap flex-sm-column align-items-center">
-        <section class="d-flex flex-column align-items-center">
+        <section class="d-flex flex-column align-items-center w-100">
           <div>
             <img src="../images/interna-homebanking.jpg" class="w-100 ps-md-5 pe-md-5" alt="interna-homebanking">
             <h6 class="m-5">Home / Accounts</h6>
@@ -77,16 +77,17 @@
                   </div>
                   <p class="btn rounded-1 w-75" style="background-color:  #ffb300;"><a
                       :href="'./account.html?id='+account.id" class="text-light">Transactions</a></p>
-                  <p class="btn rounded-1 w-75" style="background-color: #ffb300;" @click="deleteAccount(account.id)"
+                  <p class="btn rounded-1 w-75" style="background-color: #ffb300;" @click="confirmDelete"
                     class="text-light">
                     Delete account</p>
                 </div>
               </div>
             </div>
           </div>
-          <nav class="w-100 d-flex flex-column ps-md-5 pe-md-5" id="nav2">
+          <nav class="w-100 d-flex flex-column d-md-flex flex-md-wrap ps-md-5 pe-md-5" id="nav2">
             <h5 class="mt-4">Quick operations</h5>
-            <ul class="list-group-flush d-flex flex-column d-md-flex flex-md-row shadow text-center" style="background-color: #ffffff;">
+            <ul class="list-group-flush d-flex flex-column d-md-flex flex-md-row flex-md-wrap d-xl-flex flex-xl-nowrap shadow text-center"
+              style="background-color: #ffffff;">
               <li class="list-group-item text-dark"><a href="./loans-payment.html" class="text-dark">Pay dues</a></li>
               <li class="list-group-item"><a href="./loan-application.html" class="text-dark">Request a loan</a></li>
               <li class="list-group-item text-dark">Invest</li>
@@ -138,6 +139,19 @@
             </div>
             <input type="submit" @click="createAccount" value="Confirm"
               class="w-25 d-flex justify-content-center border-0" style="background-color: #ffb300;"></input>
+          </div>
+        </div>
+      </div>
+      <div id="confirm-delete" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal2">&times;</span>
+          <p class="d-flex justify-content-center">Are you sure you want to delete this account?</p>
+          <div class="d-flex justify-content-evenly">
+            <div v-for="account of accounts">
+              <button @click="deleteAccount(account.id)" style="background-color: #ffb300;"
+                class="border-0 p-1 d-flex justify-content-center">Confirm</button>
+            </div>
+            <button @click="closeModal" class="bg-dark-subtle border-0 p-1 justify-content-center">Cancel</button>
           </div>
         </div>
       </div>

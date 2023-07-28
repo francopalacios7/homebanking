@@ -69,7 +69,6 @@ public class CardController {
         }
     }
     @Transactional
-    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/cards/payment")
     public ResponseEntity<Object> cardPayment(@RequestBody CardPaymentDTO cardPaymentDTO){
         Card card = cardService.findByNumber(cardPaymentDTO.getNumber());

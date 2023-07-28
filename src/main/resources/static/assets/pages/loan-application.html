@@ -68,7 +68,7 @@
                 <label for="accounts" class="d-flex flex-column">
                     Select an account:
                     <select name="accounts" id="accounts" v-model="accountNumber">
-                        <template v-for="account of accounts">
+                        <template v-for="account of accountsActive">
                             <option :value="account.number">{{account.number}}</option>
                         </template>
                     </select>
