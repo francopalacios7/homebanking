@@ -1,49 +1,62 @@
 package com.MindHub.HomeBanking.controllers;
 
 import com.MindHub.HomeBanking.dtos.ClientDTO;
+import com.MindHub.HomeBanking.models.Account;
+import com.MindHub.HomeBanking.models.AccountType;
 import com.MindHub.HomeBanking.models.Client;
-import com.MindHub.HomeBanking.repositories.ClientRepository;
+import com.MindHub.HomeBanking.service.AccountService;
+import com.MindHub.HomeBanking.service.ClientService;
+import com.MindHub.HomeBanking.utils.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping ("/api")
 public class ClientController {
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
+    @Autowired
+    private AccountService accountService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @RequestMapping ("/clients")
+    private String randomNum;
+    @GetMapping ("/clients")
     public List<ClientDTO> getClients() {
-        return clientRepository.findAll().stream().map(ClientDTO::new).collect(Collectors.toList());
+        return clientService.getClientsDTO();
     }
-    @RequestMapping("/clients/{id}")
-    public ClientDTO getClient(@PathVariable Long id ){
-       return clientRepository.findById(id)
-               .map(ClientDTO::new)
-               .orElse(null);
+    @GetMapping("/clients/{id}")
+    public ClientDTO getClient(@PathVariable Long id){
+       return clientService.getClientDTO(id);
     }
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
-        if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
-        }
-        if (clientRepository.findByEmail(email) !=  null) {
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
-        }else {clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
-            return new ResponseEntity<>(HttpStatus.CREATED);}
+            if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()) {
+                return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            }
+            if (clientService.findByEmail(email) !=  null) {
+                return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            }
+            else{
+                Client client = clientService.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
+                do{
+                    randomNum = Utilities.accountNumberGenerator();
+                }while (accountService.findByNumber(randomNum) != null);
+                Account account = new Account(randomNum, 0.0, LocalDate.now(), true, AccountType.CURRENT);
+                client.addAccount(account);
+                accountService.save(account);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
     }
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getAuthenticatedClient(Authentication authentication){
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+        return clientService.getAuthenticatedClientDTO(authentication);
     }
 }

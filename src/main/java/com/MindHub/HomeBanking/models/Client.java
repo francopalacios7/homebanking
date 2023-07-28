@@ -1,6 +1,6 @@
 package com.MindHub.HomeBanking.models;
-import org.hibernate.annotations.GenericGenerator;
 
+import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +28,6 @@ public class Client {
         lastName = last;
         this.email = email;
         this.password = password;
-
     }
     public Set<Account> getAccounts() {
         return accountSet;
@@ -40,7 +39,7 @@ public class Client {
     public Set<ClientLoan> getClientLoanSet() {
         return clientLoanSet;
     }
-    public void addLoan(ClientLoan clientLoan) {
+    public void addClientLoan(ClientLoan clientLoan) {
         clientLoan.setClient(this);
         clientLoanSet.add(clientLoan);
     }
@@ -61,6 +60,9 @@ public class Client {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public void setAccountSet(Set<Account> accountSet) {this.accountSet = accountSet;}
+    public void setClientLoanSet(Set<ClientLoan> clientLoanSet) {this.clientLoanSet = clientLoanSet;}
+    public void setCardSet(Set<Card> cardSet) {this.cardSet = cardSet;}
     public String getEmail() {
         return email;
     }

@@ -8,38 +8,57 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @EnableWebSecurity
 @Configuration
-public class WebAuthorization{
+public class WebAuthorization implements WebMvcConfigurer {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/assets/pages/**","/assets/style/**","/assets/script/**","/assets/images/**").permitAll()
+                .antMatchers("/assets/pages/home.html","/assets/pages/login.html","/assets/pages/signup.html","/assets/style/**","/assets/script/**","/assets/images/**","/api/login","/api/logout","/assets/pages/more-info.html", "/assets/pages/loan-application.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+                .antMatchers(HttpMethod.POST,"api/login", "/api/logout").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/cards/payment").permitAll()
                 .antMatchers("/manager.html", "/h2-console","/api/clients").hasAuthority("ADMIN")
+                .antMatchers("/assets/pages/accounts.html").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/admin/loans").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/transactions").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.PUT, "/api/clients/current/cards/{id}").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.PUT, "/api/clients/current/accounts/{id}").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/loans").hasAuthority("CLIENT")
                 .antMatchers("/assets/pages/accounts.html",
                                         "/assets/pages/account.html",
-                                        "/assets/script/accounts.js",
-                                        "/assets/script/account.js",
                                         "/assets/pages/cards.html",
-                                        "/assets/style/cardsStyle.css",
-                                        "/assets/script/cards.js",
-                                        "/api/clients/current").hasAuthority("CLIENT")
-                .anyRequest().denyAll();
+                                        "/assets/pages/create-cards.html",
+                                        "/api/clients/current",
+                                        "/api/loans",
+                        "/assets/pages/transfers.html").hasAuthority("CLIENT")
+                        .anyRequest().denyAll();
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
         http.logout().logoutUrl("/api/logout");
+        // turn off checking for CSRF tokens
         http.csrf().disable();
+        //disabling frameOptions so h2-console can be accessed
+        http.cors();
         http.headers().frameOptions().disable();
+        // if user is not authenticated, just send an authentication failure response
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+        // if login is successful, just clear the flags asking for authentication
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
+        // if login fails, just send an authentication failure response
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+        // if logout is successful, just send a success response
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
         return http.build();
     }
@@ -49,4 +68,13 @@ public class WebAuthorization{
             session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
     }
-}
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://127.0.0.1:5500")
+                        .allowedMethods("POST")
+                        .allowedHeaders("*");
+            }
+    }
+
+

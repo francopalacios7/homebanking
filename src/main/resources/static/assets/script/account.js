@@ -6,7 +6,9 @@ createApp({
         account: [],
         param: "",
         transactions: [],
-        amount: []
+        amount: [],
+        accounts: [],
+        client: []
       }
     },
     created() {
@@ -16,18 +18,18 @@ createApp({
       loadData() {
         this.param = new URLSearchParams(document.location.search).get("id");
         axios
-          .get(`http://localhost:8080/api/accounts/${this.param}`)
+          .get(`/api/clients/current`)
           .then((response) => {
-            this.account = response.data;
-            console.log(this.account);
+            this.client = response.data
+            this.account = this.client.accounts.find(account => account.id == this.param)
             this.transactions = this.account.transactions
             this.transactions.sort((a,b) => b.id - a.id )
             this.amount = this.transactions.amount
             this.amount = new Intl.NumberFormat('en-US',{
               style: 'currency',
               currency: 'USD'
-
             })
+            console.log(response);
           })
           .catch((error) => console.log(error));
       },

@@ -1,7 +1,6 @@
 package com.MindHub.HomeBanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -15,16 +14,18 @@ public class Transaction {
     private Double amount;
     private String description;
     private LocalDateTime dateTime;
+    private Double balance;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="account_id")
     private Account account;
     public Transaction() {
     }
-    public Transaction(TransactionType type, Double amount, String description, LocalDateTime dateTime) {
+    public Transaction(TransactionType type, Double amount, String description, LocalDateTime dateTime, Double balance) {
         this.type = type;
         this.amount = amount;
         this.description = description;
         this.dateTime = dateTime;
+        this.balance = balance;
     }
     public Long getId() {
         return id;
@@ -59,4 +60,6 @@ public class Transaction {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
+    public Double getBalance() {return balance;}
+    public void setBalance(Double balance) {this.balance = balance;}
 }

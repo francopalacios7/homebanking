@@ -3,7 +3,7 @@ margin: 0 !important;
 padding: 0 !important;
 box-sizing: border-box !important;
 font-family: 'Roboto', sans-serif;
-background-color: beige;
+background-color: rgba(214, 214, 214, 0.447);
 }
  
 main{
@@ -11,10 +11,19 @@ main{
     
 }
 #account{
-    background-color:#e8c39e !important;
-    border: solid black !important;
+    background-color:#ffffff !important;
+    box-shadow: 0.5px  #0000005e;
 }
 
+#presentation{
+    background-image: url("/assets/images/5f5b7704da8b97990b5107fa_tipos-de-banco.jpeg");
+    background-position: center;
+    height: 90vh;
+}
+
+.center{
+    text-align: center;
+}
 
 a{
     text-decoration: none;
@@ -24,22 +33,31 @@ a{
     height: 25rem !important;
     object-fit: cover!important;
 }
+.vstack{
+    box-shadow: 0.5px  #0000005e;
+}
 
-.vstack div:hover{
+.vstack div:hover, .hover:hover{
     transform: scale(1.0) !important;
     transition: 0.5s;
-    border: 1px solid black;
-    background-color: rgb(85, 65, 17);
-    color: white!important;
+    background-color:rgba(214, 214, 214, 0.721);
+    color: rgb(0, 0, 0)!important;
+}
+
+.shadow{
+    box-shadow: 0.5px  #0000005e;
 }
 
 #background{
-    background-color:#b08e6b
+    background-color:#ffffff
 }
 
+/* .height{
+    height: 100% !important;
+} */
+
 .card{
-    background-color: burlywood;
-    box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem #0000005e;
+    box-shadow: 0.5px  #0000005e;
 }
 
 .card-img-top{
@@ -53,12 +71,49 @@ a{
     padding-bottom: 3rem !important;
 }
 
-
 .list-group-flush{
     padding: 0!important;
 }
 
-.border-bottom{
-    border: #f5e1ce
-    ;
+.nav-bar ul li{
+    text-shadow: 1rem 1rem 1rem 1rem black !important;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+  }
+  
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .info-img{
+    height: 80vh;
+  }

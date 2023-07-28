@@ -12,15 +12,15 @@
 
 <body>
   <div id="app">
-    <nav class="navbar navbar-expand-lg" style="background-color: #7a5c3c;">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img class="w-50"
-            src="../images/Captura_de_pantalla_2023-06-05_175222-removebg-preview.png" alt="logo"></a>
+    <nav class="navbar navbar-expand-lg d-flex align-items-center flex-column" id="presentation">
+      <div class="container-fluid" style="background-color: #6060606a;">
+        <a class="" href="#"><img class="w-25"
+            src="../images/Captura_de_pantalla_2023-06-29_114047-removebg-preview.png" alt="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav" v-if="loggedUser">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link active text-decoration-underline text-light" aria-current="page" href="#">Home</a>
@@ -39,7 +39,23 @@
             </li>
           </ul>
         </div>
-        <div class="nav-item dropdown" v-if="logged">
+        <div class="collapse navbar-collapse" id="navbarNav" v-if="!loggedUser">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active text-decoration-underline text-light" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="#">News</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link   text-light" href="#">Investing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link   text-light" href="#">Trading</a>
+            </li>
+          </ul>
+        </div>
+        <div class="nav-item dropdown" v-if="loggedUser">
           <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
             aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white"
               class="bi bi-file-person" viewBox="0 0 16 16">
@@ -52,66 +68,106 @@
             <li><button class="dropdown-item" type="button" @click="logOut">Log Out</button></li>
           </ul>
         </div>
-        <div class="d-flex" v-else>
+        <div class="d-flex" v-if="!loggedUser">
           <div>
-            <button class="btn text-black m-2" style="background-color: rgb(67, 209, 228);" type="button"><a
+            <button class="btn text-black m-2" style="background-color: #ffb300;" type="button"><a
                 href="../pages/login.html" class="text-dark">Log In</a></button>
           </div>
           <div>
-            <button class="btn text-black m-2" style="background-color: rgb(67, 209, 228);" type="button"><a href=""
+            <button class="btn text-black m-2" style="background-color: #ffb300;" type="button"><a href="./signup.html"
                 class="text-dark">Sign Up</a></button>
+          </div>
+        </div>
+      </div>
+      <div class="d-none d-md-block w-100 height">
+        <div class="d-flex flex-column justify-content-center align-items-center align-items-md-end justify-content-md-end w-100 height">
+          <h1 class="m-3 text-light">Welcome to Palacios <br> Homebanking</h1>
+          <p class="m-3 text-light">In today's digital age, convenience and
+            security are key when it comes to managing your finances.<br> Our Homebanking provides you with the perfect
+            solution to take your banking operations to the next level. </p>
+          <div class="d-flex m-3 gap-5" v-if="!loggedUser">
+            <a href="../pages/more-info.html"><button class="border-0 p-1" style="background-color: #ffb300;">Learn
+                more</button></a>
+            <a href="../pages/login.html"><button class="text-light border-0 p-1"
+                style="background-color: rgb(0, 0, 0);">Get started</button></a>
+          </div>
+          <div class="d-flex m-3 gap-5" v-if="loggedUser">
+            <a href="../pages/more-info.html"><button class="border-0 p-1" style="background-color: #ffb300;">Learn
+                more</button></a>
+            <a href="../pages/accounts.html"><button class="text-light border-0 p-1"
+                style="background-color: rgb(0, 0, 0);">My accounts</button></a>
           </div>
         </div>
       </div>
     </nav>
     <main>
-      <div class="d-flex">
-        <img src="../images/5f5b7704da8b97990b5107fa_tipos-de-banco.jpeg" alt="home"
-          class="w-50 ms-5 me-5 mb-5 d-flex justify-content-center">
-        <h1 class="d-flex justify-content-center align-items-center ms-5">Welcome to Palacios Homebanking!</h1>
+      <div style="background-color: rgba(214, 214, 214, 0.447);" class="d-flex flex-column flex-md-row justify-content-md-around">
+        <div class="p-5 d-flex flex-column justify-content-center align-items-center hover">
+          <h2 style="color: #ffb300;">500+</h2>
+          <p class="center">Succesfully<br>completed transaction</p>
+        </div>
+        <div class="p-5 d-flex flex-column justify-content-center align-items-center hover">
+          <h2 style="color: #ffb300;">700+</h2>
+          <p class="center">Highly specialised<br>employees transaction</p>
+        </div>
+        <div class="p-5 d-flex flex-column justify-content-center align-items-center hover">
+          <h2 style="color: #ffb300;">24</h2>
+          <p class="center">Countries<br>around the world</p>
+        </div>
       </div>
-      <div class="vstack m-5 border border-dark" style="background-color: burlywood;">
-        <div class="p-2 text-dark"><span class="text-dark ">|</span><svg xmlns="http://www.w3.org/2000/svg" width="16"
-            height="16" fill="currentColor" class="bi bi-question-circle m-2" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-            <path
-              d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
-          </svg>Frequent Questions</div>
-        <div class="p-2 text-dark"><span class="text-dark">|</span><svg xmlns="http://www.w3.org/2000/svg" width="16"
-            height="16" fill="currentColor" class="bi bi-person-fill-gear m-2" viewBox="0 0 16 16">
-            <path
-              d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
-          </svg>New Users</div>
-        <div class="p-2 text-dark"><span class="text-dark">|</span><svg xmlns="http://www.w3.org/2000/svg" width="16"
-            height="16" fill="currentColor" class="bi bi-graph-up-arrow m-2" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-              d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
-          </svg>Investing</div>
-        <div class="p-2 text-dark"><span class="text-dark">|</span><svg xmlns="http://www.w3.org/2000/svg" width="16"
-            height="16" fill="currentColor" class="bi bi-newspaper m-2" viewBox="0 0 16 16">
-            <path
-              d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z" />
-            <path
-              d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
-          </svg>News</div>
-        <div class="p-2 text-dark"><span class="text-dark">|</span><svg xmlns="http://www.w3.org/2000/svg" width="16"
-            height="16" fill="currentColor" class="bi bi-piggy-bank m-2" viewBox="0 0 16 16">
-            <path
-              d="M5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm1.138-1.496A6.613 6.613 0 0 1 7.964 4.5c.666 0 1.303.097 1.893.273a.5.5 0 0 0 .286-.958A7.602 7.602 0 0 0 7.964 3.5c-.734 0-1.441.103-2.102.292a.5.5 0 1 0 .276.962z" />
-            <path fill-rule="evenodd"
-              d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595zM2.516 6.26c.455-2.066 2.667-3.733 5.448-3.733 3.146 0 5.536 2.114 5.536 4.542 0 1.254-.624 2.41-1.67 3.248a.5.5 0 0 0-.165.535l.66 2.175h-.985l-.59-1.487a.5.5 0 0 0-.629-.288c-.661.23-1.39.359-2.157.359a6.558 6.558 0 0 1-2.157-.359.5.5 0 0 0-.635.304l-.525 1.471h-.979l.633-2.15a.5.5 0 0 0-.17-.534 4.649 4.649 0 0 1-1.284-1.541.5.5 0 0 0-.446-.275h-.56a.5.5 0 0 1-.492-.414l-.254-1.46h.933a.5.5 0 0 0 .488-.393zm12.621-.857a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199z" />
-          </svg>Accounts</div>
-        <div class="p-2 text-dark"><span class="text-dark">|</span><svg xmlns="http://www.w3.org/2000/svg" width="16"
-            height="16" fill="currentColor" class="bi bi-cash-stack m-2" viewBox="0 0 16 16">
-            <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
-            <path
-              d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z" />
-          </svg>Loans</div>
-        <div class="p-2 text-dark"><span class="text-dark">|</span><svg xmlns="http://www.w3.org/2000/svg" width="16"
-            height="16" fill="currentColor" class="bi bi-lightbulb m-2" viewBox="0 0 16 16">
-            <path
-              d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z" />
-          </svg>Taxes and Bills</div>
+      <div class="d-flex flex-column flex-md-row">
+        <div class="vstack m-5 rounded-2 w-75 w-md-50" style="background-color: rgb(255, 255, 255);">
+          <div class="p-3 text-dark" @click="moreInfo"><span class="text-dark ">|</span><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-question-circle m-2" viewBox="0 0 16 16" style="color: #ffb300;">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path
+                d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+            </svg>Frequent Questions
+          </div>
+          <div class="p-3 text-dark" @click="moreInfo2"><span class="text-dark">|</span><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-person-fill-gear m-2" viewBox="0 0 16 16" style="color: #ffb300;">
+              <path
+                d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+            </svg>New Users</div>
+          <div class="p-3 text-dark" @click="moreInfo3"><span class="text-dark">|</span><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-graph-up-arrow m-2" viewBox="0 0 16 16" style="color: #ffb300;">
+              <path fill-rule="evenodd"
+                d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
+            </svg>Investing</div>
+          <div class="p-3 text-dark" @click="moreInfo4"><span class="text-dark">|</span><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-newspaper m-2"
+              viewBox="0 0 16 16" style="color: #ffb300;">
+              <path
+                d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z" />
+              <path
+                d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
+            </svg>News</div>
+          <div class="p-3 text-dark" @click="moreInfo5"><span class="text-dark">|</span><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-piggy-bank m-2"
+              viewBox="0 0 16 16" style="color: #ffb300;">
+              <path
+                d="M5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm1.138-1.496A6.613 6.613 0 0 1 7.964 4.5c.666 0 1.303.097 1.893.273a.5.5 0 0 0 .286-.958A7.602 7.602 0 0 0 7.964 3.5c-.734 0-1.441.103-2.102.292a.5.5 0 1 0 .276.962z" />
+              <path fill-rule="evenodd"
+                d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595zM2.516 6.26c.455-2.066 2.667-3.733 5.448-3.733 3.146 0 5.536 2.114 5.536 4.542 0 1.254-.624 2.41-1.67 3.248a.5.5 0 0 0-.165.535l.66 2.175h-.985l-.59-1.487a.5.5 0 0 0-.629-.288c-.661.23-1.39.359-2.157.359a6.558 6.558 0 0 1-2.157-.359.5.5 0 0 0-.635.304l-.525 1.471h-.979l.633-2.15a.5.5 0 0 0-.17-.534 4.649 4.649 0 0 1-1.284-1.541.5.5 0 0 0-.446-.275h-.56a.5.5 0 0 1-.492-.414l-.254-1.46h.933a.5.5 0 0 0 .488-.393zm12.621-.857a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199z" />
+            </svg>Accounts</div>
+          <div class="p-3 text-dark" @click="moreInfo6"><span class="text-dark">|</span><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack m-2"
+              viewBox="0 0 16 16" style="color: #ffb300;">
+              <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+              <path
+                d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z" />
+            </svg>Loans</div>
+          <div class="p-3 text-dark" @click="moreInfo7"><span class="text-dark">|</span><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb m-2"
+              viewBox="0 0 16 16" style="color: #ffb300;">
+              <path
+                d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z" />
+            </svg>Taxes and Bills</div>
+        </div>
+        <img src="../images/ss_world_bank-1-e1534136070626.jpg" alt="bank" class="w-md-50 w-75 m-5">
       </div>
       <section class="d-flex flex-column align-items-center ">
         <h1 class="d-flex justify-content-center m-5">Join us to earn this exclusives benefits!</h1>
@@ -122,50 +178,58 @@
             <article class="card-body">
               <h5 class="card-title">Do everything from the app</h5>
               <p class="card-text">Use it to transfer money, pay with QR, invest, request a loan, ¡and more!</p>
-              <a href="#" class="btn" style="background-color: rgb(255, 255, 255);">Subscribe</a>
+              <a href="./transfers.html" class="btn text-light" style="background-color:#ffb300;" v-if="loggedUser">Go
+                to transfers</a>
+              <a href="./login.html" class="btn text-light" style="background-color:#ffb300;"
+                v-if="!loggedUser">Subscribe</a>
             </article>
           </div>
-          <div class="card gap-4" style="width: 18rem;">
+          <div class="card gap-4" style="width: 18rem; background-color:#ffb300;">
             <img src="../images/tipos-de-tarjeta-pago-cual-conviene-cada-caso_1_621x621.jpeg" class="card-img-top"
               alt="debit-credit">
             <article class="card-body">
               <h5 class="card-title">Payments to have a relaxed month</h5>
               <p class="card-text">Use your credit and debit cards to buy everything you want</p>
-              <a href="#" class="btn" style="background-color: rgb(255, 255, 255);">Subscribe</a>
+              <a href="./cards.html" class="btn text-dark" style="background-color: #ffffff;" v-if="loggedUser">Go to
+                cards</a>
+              <a href="./login.html" class="btn text-dark" style="background-color: #ffffff;"
+                v-if="!loggedUser">Subscribe</a>
             </article>
           </div>
-          <div class="card gap-4" style="width: 18rem;">
-            <img
-              src="../images/photo-1453834190665-46ff0a1fbd5a.avif"
-              class="card-img-top" alt="gift">
+          <div class="card gap-4 bg-dark text-light" style="width: 18rem;">
+            <img src="../images/photo-1453834190665-46ff0a1fbd5a.avif" class="card-img-top" alt="gift">
             <article class="card-body">
               <h5 class="card-title">Surprises for new users</h5>
               <p class="card-text">Collect your salary and we'll give you up to $60.000 to spend on selected products
                 and
                 services</p>
-              <a href="#" class="btn" style="background-color: rgb(255, 255, 255);">Subscribe</a>
+              <a href="./accounts.html" class="btn text-dark" style="background-color: #ffffff;" v-if="loggedUser">Go to
+                accounts</a>
+              <a href="./login.html" class="btn text-dark" style="background-color: #ffffff;"
+                v-if="!loggedUser">Subscribe</a>
             </article>
           </div>
         </div>
       </section>
       <article class="d-flex flex-column align-items-center m-3 m-md-5">
         <h2 class="m-3">More information</h2>
-        <div class="d-flex flex-column d-md-flex flex-md-row justify-content-md-between text-light w-md-75"
-          style="background-color: #b08e6b">
+        <div
+          class="d-flex flex-column d-md-flex flex-md-row justify-content-md-between text-dark w-md-75 rounded-2 shadow"
+          style="background-color: #ffffff">
           <div class="d-flex flex-column justify-content-center  pe-3 ps-3">
             <h4>Some extra data</h4>
             <p>A video to explain better how our Homebanking works</p>
           </div>
           <div>
-            <iframe class="pt-2 w-100" src="https://www.youtube.com/embed/AKmHrbUCyf4"
-              title="YouTube video player" frameborder="0"
+            <iframe class="pt-2 w-100" src="https://www.youtube.com/embed/AKmHrbUCyf4" title="YouTube video player"
+              frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen></iframe>
           </div>
         </div>
         <div
-          class="d-flex flex-column d-md-flex flex-md-row justify-content-md-between text-light w-md-75 mt-5"
-          style="background-color: #b08e6b">
+          class="d-flex flex-column d-md-flex flex-md-row justify-content-md-between text-dark w-md-75 rounded-2 shadow mt-5"
+          style="background-color:#ffb300;">
           <div>
             <iframe class="pt-2" src="https://www.youtube.com/embed/AKmHrbUCyf4" title="YouTube video player"
               frameborder="0"
@@ -208,27 +272,265 @@
           </div>
         </div>
       </article>
+      <div id="info-modal" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal">&times;</span>
+          <img src="../images/501_faq.jpg" alt="FAQ" class="mb-5">
+          <h5>1. How do I set up online banking for my account?</h5>
+          <p>To set up online banking, you can visit your bank's website and look for the "Sign Up" or "Register"
+            option. Follow the instructions provided, which usually involve verifying your identity and creating login
+            credentials. You may need your account number, Social Security number, and other personal information.</p>
+          <h5>2. What are the benefits of using online banking?</h5>
+          <p>Using online banking offers several benefits, including 24/7 access to your account, the ability to check
+            balances and transaction history, transfer funds between accounts, pay bills, set up automatic payments, and
+            deposit checks. It provides convenience, saves time, and allows you to manage your finances from anywhere
+            with an internet connection.</p>
+          <h5>3. Is online banking secure?</h5>
+          <p>Banks take security measures to protect your online banking experience. They use encryption technology,
+            secure login procedures, and offer additional security features like two-factor authentication. It's
+            essential to keep your login credentials confidential, regularly update your password, and be cautious of
+            phishing attempts or suspicious links.</p>
+          <h5>4. How can I reset my online banking password?</h5>
+          <p>If you forget your online banking password, most banks provide a "Forgot Password" option on their login
+            page.
+            By clicking on it, you can initiate the password reset process. Typically, you'll need to verify your
+            identity
+            through personal information or receive a verification code via email or text message to create a new
+            password.</p>
+          <h5>5. Can I access my account on a mobile device?</h5>
+          <p>Yes, most banks offer mobile banking apps or have mobile-responsive websites, allowing you to access your
+            account on smartphones and tablets. You can download the bank's official app from your device's app store
+            and
+            log in using your online banking credentials.</p>
+        </div>
+      </div>
+      <div id="info-modal2" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal2">&times;</span>
+          <img src="../images/add-user-vector-icon.jpg" alt="new-user" class="info-img">
+          <h4>Here's some important information for new users of home banking:</h4>
+          <h5>Sign-up process:</h5>
+          <p>To sign up for home banking, visit your bank's website and look for the "Sign Up" or
+            "Register" option. Follow the instructions provided and provide the necessary information, such as your
+            account number, personal details, and contact information. Create a username and password for future logins.
+          </p>
+          <h5>Login credentials:</h5>
+          <p>Your username and password are essential for accessing your home banking account. Choose a
+            strong password that includes a combination of letters, numbers, and special characters. Keep your login
+            credentials confidential and avoid using easily guessable information</p>
+          <h5>Security measures:</h5>
+          <p>Banks prioritize the security of their online banking platforms. They often use encryption
+            technology, secure login procedures, and may offer additional security features like two-factor
+            authentication. Be cautious of phishing attempts and ensure you are logging in on the official bank's
+            website
+            or mobile app.</p>
+          <h5>Account overview:</h5>
+          <p>Once logged in, you'll typically see an account overview page displaying your account
+            balances, recent transactions, and any alerts or messages from the bank. Familiarize yourself with the
+            layout
+            and navigation of the home banking interface.</p>
+          <h5>Transaction capabilities:</h5>
+          <p>Home banking allows you to perform various transactions. You can check your account
+            balances, review transaction history, transfer funds between accounts (internal or external transfers), pay
+            bills, set up recurring payments, and sometimes apply for loans or credit cards.</p>
+        </div>
+      </div>
+      <div id="info-modal3" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal3">&times;</span>
+          <img src="../images/Impact-Investing-small-1080x675.jpeg" alt="Investing" class="mb-5">
+          <h4>When it comes to investing through home banking, here are some essential tips and advice to consider:</h4>
+          <h5>1. Set clear investment goals:</h5>
+          <p>Determine your financial objectives, whether it's saving for retirement, funding
+            education, or achieving other long-term financial goals. Setting clear goals will help you make informed
+            investment decisions.</p>
+          <h5>2. Understand your risk tolerance:</h5>
+          <p>Assess your risk tolerance, which refers to your ability to withstand
+            potential investment losses. Consider your financial situation, time horizon, and comfort level with market
+            fluctuations. This will help you choose investments that align with your risk tolerance.</p>
+          <h5>3. Diversify your portfolio:</h5>
+          <p>Diversification is key to managing risk in your investment portfolio. Spread your
+            investments across different asset classes, industries, and geographic regions. This can help reduce the
+            impact of a single investment's performance on your overall portfolio.</p>
+          <h5>4. Do your research:</h5>
+          <p>Take the time to research and analyze potential investments. Understand the fundamentals of
+            the companies or assets you're considering, including their financial health, competitive position, and
+            growth
+            prospects. Additionally, keep an eye on broader market trends and economic indicators.</p>
+          <h5>5. Consider investment fees:</h5>
+          <p>Pay attention to the fees associated with investing through home banking. Online
+            brokerages may charge commissions, account maintenance fees, or expense ratios on investment products.
+            Compare
+            the fees across different platforms and consider their impact on your returns.</p>
+        </div>
+      </div>
+      <div id="info-modal4" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal4">&times;</span>
+          <img src="../images/collection-newspapers.webp" alt="news" class="mb-5">
+          <h4>Here are some popular financial news sources that provide up-to-date information on various financial
+            topics:</h4>
+          <h5>Bloomberg:</h5>
+          <p>Bloomberg is a leading global provider of financial news, data, and analysis. It covers a wide
+            range of topics, including stocks, bonds, commodities, currencies, and global market trends.</p>
+          <h5>CNBC: </h5>
+          <p>CNBC is a renowned financial news network that offers live market coverage, business news, economic
+            analysis, and interviews with industry experts. It covers domestic and international financial markets,
+            technology, entrepreneurship, and more.</p>
+          <h5>Financial Times:</h5>
+          <p> The Financial Times is a respected international newspaper covering business, economic, and
+            financial news. It provides in-depth analysis, opinion pieces, and comprehensive coverage of global markets.
+          </p>
+          <h5>The Wall Street Journal:</h5>
+          <p>The Wall Street Journal is a well-known financial newspaper that covers business
+            news, market trends, company profiles, and economic developments. It offers a mix of news articles, opinion
+            pieces, and analysis.</p>
+          <h5>Reuters:</h5>
+          <p> Reuters is a trusted news agency that covers a wide range of topics, including finance, business, and
+            global markets. It provides real-time news, analysis, and exclusive reports on various financial sectors.
+          </p>
+          <h5>Yahoo Finance:</h5>
+          <p> Yahoo Finance is an online platform that offers a combination of financial news, stock quotes,
+            portfolio management tools, and market data. It covers domestic and international markets, economic
+            indicators, and company-specific news.</p>
+          <h5>Forbes:</h5>
+          <p> Forbes is a popular business and financial magazine that covers a wide range of topics, including
+            investing, entrepreneurship, personal finance, and market trends. It features articles from industry experts
+            and provides insights into various financial sectors.</p>
+          <h5>MarketWatch:</h5>
+          <p>MarketWatch is a financial news website that provides real-time market data, business news,
+            analysis, and commentary. It covers stocks, bonds, commodities, and other financial instruments.</p>
+          <p>Remember to conduct your own research and analysis and consider multiple sources to gain a comprehensive
+            understanding of financial news and market trends.</p>
+        </div>
+      </div>
+      <div id="info-modal5" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal5">&times;</span>
+          <img src="../images/why_banks_wont_increase_savings_account_rates.jpg" alt="account" class="mb-5">
+          <h5>Checking Accounts:</h5>
+          <p>A checking account is a basic account used for everyday transactions. It allows you to
+            deposit money, write checks, make electronic payments, and withdraw funds using debit cards or ATMs.
+            Checking
+            accounts often offer features like online banking, bill pay, and mobile banking.</p>
+          <h5>Savings Accounts:</h5>
+          <p>A savings account is designed to help you save money over time. It typically offers a modest
+            interest rate on your balance, allowing your money to grow. Savings accounts often have restrictions on the
+            number of withdrawals or transfers you can make per month.</p>
+          <h5>Money Market Accounts:</h5>
+          <p>Money market accounts (MMAs) are similar to savings accounts but usually offer higher
+            interest rates. MMAs may require higher minimum balances and offer limited check-writing privileges. They
+            can
+            be a good option for short-term savings or emergency funds.</p>
+          <h5> Certificates of Deposit (CDs):</h5>
+          <p> CDs are time deposits that offer fixed interest rates for a specific term,
+            ranging from a few months to several years. They generally offer higher interest rates than regular savings
+            accounts but come with a penalty for early withdrawal.</p>
+          <h5> Individual Retirement Accounts (IRAs): </h5>
+          <p>IRAs are retirement savings accounts that offer tax advantages.
+            Traditional IRAs provide potential tax deductions on contributions, while Roth IRAs offer tax-free
+            withdrawals
+            in retirement. IRAs have annual contribution limits and may have withdrawal restrictions.</p>
+          <h5> Brokerage Accounts:</h5>
+          <p>Brokerage accounts allow you to invest in stocks, bonds, mutual funds, ETFs, and other
+            securities. They give you access to financial markets and allow you to buy and sell investments. Brokerage
+            accounts may be offered by banks or specialized brokerage firms.</p>
+        </div>
+      </div>
+      <div id="info-modal6" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal6">&times;</span>
+          <img src="../images/1573072323cashloanscanada.jpg" alt="loans" class="mb-5">
+          <h5>Personal Loans:</h5>
+          <p>Personal loans are unsecured loans that can be used for a variety of purposes, such as debt
+            consolidation, home improvements, or unexpected expenses. They typically have fixed interest rates and fixed
+            monthly payments over a set term. The loan amount and interest rate offered may depend on factors like
+            credit
+            history, income, and the lender's criteria.</p>
+          <h5>Automotive Loans:</h5>
+          <p>Auto loans are used to finance the purchase of a vehicle. They can be obtained from banks, credit
+            unions, or car dealerships. Auto loans often have fixed interest rates and terms ranging from 3 to 7 years.
+            The interest rate and loan amount may be influenced by factors like credit score, down payment, and the
+            age/value of the vehicle.</p>
+          <h5>Mortgage Loans:</h5>
+          <p> Mortgage loans are long-term loans used to purchase or refinance a home. They typically have
+            lower interest rates compared to other loans due to the collateral provided (the property). Mortgage loans
+            can
+            have fixed or adjustable interest rates and terms ranging from 15 to 30 years. The loan amount, interest
+            rate,
+            and terms depend on factors like creditworthiness, down payment, and property appraisal.</p>
+        </div>
+      </div>
+      <div id="info-modal7" class="modal">
+        <div class="modal-content">
+          <span class="close d-flex justify-content-end" @click="closeModal7">&times;</span>
+          <img src="../images/Tax-Bill.jpg" alt="tax-and-bill" class="mb-5">
+          <h4>Tax Payments:</h4>
+          <h5>Electronic Tax Payments:</h5>
+          <p>Many home banking platforms offer the option to make tax payments electronically. You
+            can typically access this feature under the "Payments" or "Bill Pay" section of your home banking interface.
+          </p>
+          <h5>Set Up Payees:</h5>
+          <p> If your tax authority is listed as a payee, you can set them up as a recipient for tax
+            payments. You may need to provide your tax identification number or other necessary information.</p>
+          <h5>Schedule Payments:</h5>
+          <p> Once the payee is set up, you can schedule tax payments in advance or make one-time
+            payments. Select the desired payment amount, date, and any additional details required.</p>
+          <h5> Verify and Confirm: </h5>
+          <p> Review the payment details to ensure accuracy, including the payment amount and recipient
+            information. Confirm the payment request and save any confirmation or transaction numbers for future
+            reference.</p>
+          <h4>Bill Payments:</h4>
+          <h5>Add Payees: </h5>
+          <p>To pay bills through home banking, you need to add your billers as payees. This can usually be
+            done by selecting "Add Payee" or a similar option within the home banking interface. Provide the necessary
+            information, such as the biller's name, address, and your account number with the biller.</p>
+          <h5>Schedule Payments:</h5>
+          <p> Once the payee is added, you can schedule bill payments. Specify the payment amount, date,
+            and frequency (one-time or recurring). You can typically choose to pay bills immediately or set up future
+            payments.</p>
+          <h5>Review and Confirm:</h5>
+          <p>Before finalizing the payment, review the details to ensure accuracy. Verify the payment
+            amount, payee information, and payment date. Confirm the payment request and keep a record of the
+            transaction
+            for reference.</p>
+          <h4> Security Considerations:</h4>
+          <h5> Ensure Secure Connection:</h5>
+          <p>When accessing your home banking platform for tax or bill payments, ensure you have
+            a secure internet connection (look for "https" in the website URL) to protect your personal and financial
+            information.</p>
+          <h5>Use Strong Authentication:</h5>
+          <p> Take advantage of any additional security measures offered by your home banking
+            platform, such as two-factor authentication. This adds an extra layer of protection to your account.
+            Keep Records: Maintain a record of your tax and bill payments, including confirmation numbers, payment
+            dates,
+            and amounts. This can be useful for reference and for resolving any discrepancies that may arise.</p>
+          <p> It's important to familiarize yourself with the specific features and options offered by your home banking
+            platform. Consult your bank's website or contact their customer support for detailed instructions on paying
+            taxes and bills through their specific system.</p>
+        </div>
+      </div>
     </main>
-    <footer class="d-flex align-items-center p-3" style="background-color: #7a5c3c;">
-      <a href="https://www.linkedin.com/in/franco-palacios-0a45ab26a/" target="_blank" class="text-light"><svg
+    <footer class="d-flex align-items-center p-3" style="background-color:#ffb300;">
+      <a href="https://www.linkedin.com/in/franco-palacios-0a45ab26a/" target="_blank" class="text-dark"><svg
           xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-linkedin m-2"
           viewBox="0 0 16 16">
           <path
             d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
         </svg></a>
-      <a href="https://www.facebook.com/franco.palacios.50159/" target="_blank" class="text-light"><svg
+      <a href="https://www.facebook.com/franco.palacios.50159/" target="_blank" class="text-dark"><svg
           xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-facebook m-2"
           viewBox="0 0 16 16">
           <path
             d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
         </svg></a>
-      <a href="https://www.instagram.com/frannpalacioss/" target="_blank" class="text-light"><svg
+      <a href="https://www.instagram.com/frannpalacioss/" target="_blank" class="text-dark"><svg
           xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-instagram m-2"
           viewBox="0 0 16 16">
           <path
             d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
         </svg></a>
-      <a href="mailto:francopalacios7@yahoo.com.ar" target="_blank" class="text-light"><svg
+      <a href="mailto:francopalacios7@yahoo.com.ar" target="_blank" class="text-dark"><svg
           xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
           class="bi bi-envelope-at-fill m-2" viewBox="0 0 16 16">
           <path
@@ -236,8 +538,10 @@
           <path
             d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034v.21Zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791Z" />
         </svg></a>
+        <a href="https://github.com/francopalacios7" target="_blank" class="text-dark"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-github m-2" viewBox="0 0 16 16">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </svg></a>
     </footer>
-    <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/coinMarquee.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"></script>

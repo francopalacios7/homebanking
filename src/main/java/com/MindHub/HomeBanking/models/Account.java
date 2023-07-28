@@ -1,5 +1,4 @@
 package com.MindHub.HomeBanking.models;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,18 +13,22 @@ public class Account {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private String number;
-    private Double balance;
+    private double balance;
     private LocalDate creationDate;
+    private boolean isActive;
+    private AccountType accountType;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
     @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
     Set<Transaction> transactionSet = new HashSet<>();
     public Account() { }
-    public Account(String number, Double balance, LocalDate date){
+    public Account(String number, double balance, LocalDate date, boolean isActive, AccountType type){
         this.number = number;
         this.balance = balance;
         creationDate = date;
+        this.isActive = isActive;
+        accountType = type;
     }
     public Set<Transaction> getTransactionSet(){ return transactionSet; }
     public void addTransaction(Transaction transaction) {
@@ -37,22 +40,21 @@ public class Account {
     public Long getId() {
         return id;
     }
-    public String getNumber() {
-        return number;
-    }
+    public String getNumber() {return number;}
     public void setNumber(String number) {
         this.number = number;
     }
-    public Double getBalance() {
-        return balance;
-    }
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
+    public double getBalance() {return balance;}
+    public void setBalance(double balance) {this.balance = balance;}
     public LocalDate getCreationDate() {
         return creationDate;
     }
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
+    public boolean isActive() {return isActive;}
+    public void setActive(boolean active) {isActive = active;}
+    public void setTransactionSet(Set<Transaction> transactionSet) {this.transactionSet = transactionSet;}
+    public AccountType getAccountType() {return accountType;}
+    public void setAccountType(AccountType accountType) {this.accountType = accountType;}
 }
