@@ -19,11 +19,10 @@ createApp({
                 .get("/api/clients/current")
                 .then(response => {
                     this.clients = response.data;
-                    this.accounts = this.clients.accounts.filter(account => account.active == true).sort((a,b) => b.id - a.id )
+                    this.accounts = this.clients.accounts.sort((a,b) => b.id - a.id )
                     this.loans = this.clients.loans.sort((a,b) => b.id - a.id )
                     console.log(this.accounts);
                     this.accountsActive = this.accounts.filter(account => account.active == true)
-                    console.log(this.accountsActive);
                 })
                 .catch(error => console.log(error));
         },
@@ -52,12 +51,6 @@ createApp({
         },
         closeModal() {
             document.getElementById('account-type').style.display = 'none';
-        },
-        confirmDelete(){
-            document.getElementById('confirm-delete').style.display = 'block';
-        },
-        closeModal2(){
-            document.getElementById('confirm-delete').style.display = 'none';
         }
     }
 }).mount('#app');

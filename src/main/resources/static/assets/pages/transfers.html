@@ -79,7 +79,7 @@
                     <label for="origin" class="d-flex flex-column" v-if="radio == 'origin'">
                         Destination account:
                         <select name="accounts" id="accounts" v-model="numberForeign">
-                            <template v-for="account of accountsActive">
+                            <template v-for="account of accounts">
                                 <option :value="account.number">{{account.number}}</option>
                             </template>
                         </select>

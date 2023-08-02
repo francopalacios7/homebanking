@@ -11,7 +11,6 @@ createApp({
             accounts: [],
             loans: [],
             endModal: true,
-            accountsActive: []
         }
     },
     created() {
@@ -25,7 +24,6 @@ createApp({
                 .then(response => {
                     this.client = response.data;
                     this.accounts = this.client.accounts;
-                    this.accountsActive = this.accounts.filter(account => account.active == true)
                 })
                 .catch(error => console.log(error));
         },
