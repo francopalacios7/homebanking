@@ -19,10 +19,8 @@ createApp({
                 .get("/api/clients/current")
                 .then(response => {
                     this.clients = response.data;
-                    this.accounts = this.clients.accounts.sort((a,b) => b.id - a.id )
+                    this.accounts = this.clients.accounts.sort((a,b) => b.id - a.id ).filter(account => account.active == true)
                     this.loans = this.clients.loans.sort((a,b) => b.id - a.id )
-                    console.log(this.accounts);
-                    this.accountsActive = this.accounts.filter(account => account.active == true)
                 })
                 .catch(error => console.log(error));
         },
